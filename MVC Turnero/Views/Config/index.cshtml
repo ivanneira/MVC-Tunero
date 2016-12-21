@@ -1,14 +1,22 @@
 ﻿@{
     ViewBag.Title = "Configuración";
 }
-<h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
-<br /><br />
+    <h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
+    <br /><br />
 
+<<<<<<< HEAD
 <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
  
 <!-- Modal de consultorios -->
 <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
+=======
+    <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+>>>>>>> origin/master
 
         <!-- Modal content-->
         <div id="mcontent" class="modal-content">
@@ -55,6 +63,7 @@
 
 
 
+<<<<<<< HEAD
             @*botones*@
             <div class="modal-footer">
                 <button id="deleteButton" type="button" class="btn btn-default fa fa-trash"></button>
@@ -62,6 +71,14 @@
                 <button id="saveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
             </div>
         </div>
+=======
+                        <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
+                    </div>
+                    <br />
+                    @*identificador*@
+                    <p>Identificador</p>
+                    <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
+>>>>>>> origin/master
 
     </div>
 </div>
@@ -93,14 +110,18 @@
                 <button id="modalMensajessaveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
             </div>
         </div>
+<<<<<<< HEAD
 
     </div>
 </div>
 @*fin modal mensajes*@ 
+=======
+    </div>
+>>>>>>> origin/master
 
 
-<hr />
-<table id="example" class="display" width="95%"></table>
+    <hr />
+    <table id="example" class="display" width="95%"></table>
 
 <h3> Configuración de mensajes</h3>
 
@@ -230,7 +251,7 @@
                         error: function(e) {
                             event.stopPropagation();
                             alert("error al acceder al servidor");
-                            console.dir(data);
+                            //console.dir(data);
                         }
 
                     });
@@ -250,13 +271,12 @@
                         },
                             url: "@Url.Action("EditProfesionalesJsonResult", "Config")",
                         success: function(data) {
-                            debugger 
                             verificaGuardado(data);
                         },
                         error: function(e) {
                             event.stopPropagation();
                             alert("error al acceder al servidor");
-                            console.dir(data);
+                            //console.dir(data);
                         }
 
                     });
@@ -327,7 +347,7 @@
             //dataType: dataType,
             success: function(datax) {
 
-                console.log(datax);
+                //console.log(datax);
 
                 var table = $('#example')
                     .DataTable({

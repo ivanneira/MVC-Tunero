@@ -146,6 +146,7 @@
     <Content Include="Content\marquee\img\control-pause.png" />
     <Content Include="Content\marquee\img\skewed_print.png" />
     <Content Include="Content\marquee\styles.css" />
+    <Content Include="Content\responsive.dataTables.min.css" />
     <Content Include="Content\select.dataTables.min.css" />
     <Content Include="Content\sound\ion.sound.js" />
     <Content Include="Content\sound\ion.sound.min.js" />
@@ -254,6 +255,9 @@
     <Content Include="Content\weather\images\weathericons\9.svg" />
     <Content Include="Content\weather\images\Wind.svg" />
     <Content Include="Content\weather\js\jquery.simpleWeather.js" />
+    <Content Include="images\sort_asc.png" />
+    <Content Include="images\sort_both.png" />
+    <Content Include="images\sort_desc.png" />
     <Content Include="img\LogoGobMSP.png" />
     <Content Include="img\sjlogo.png" />
     <Content Include="packages.config" />
