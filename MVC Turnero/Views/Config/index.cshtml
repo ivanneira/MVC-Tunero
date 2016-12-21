@@ -1,22 +1,14 @@
 ﻿@{
     ViewBag.Title = "Configuración";
 }
-    <h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
-    <br /><br />
+<h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
+<br /><br />
 
-<<<<<<< HEAD
 <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
- 
-<!-- Modal de consultorios -->
+
+<!-- Modal -->
 <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
-=======
-    <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
-
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm">
->>>>>>> origin/master
 
         <!-- Modal content-->
         <div id="mcontent" class="modal-content">
@@ -36,7 +28,7 @@
 
                     </select>
                 </div>
-                <br/>
+                <br />
 
                 @*nombre de consultorio*@
                 <div class="cnombre">
@@ -45,7 +37,7 @@
                     <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
 
                 </div>
-                <br/>
+                <br />
 
                 @*nombre de profesional*@
                 <div class="nprofesional">
@@ -54,7 +46,7 @@
 
                     <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
                 </div>
-                <br/>
+                <br />
                 @*identificador*@
                 <p>Identificador</p>
                 <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
@@ -63,7 +55,6 @@
 
 
 
-<<<<<<< HEAD
             @*botones*@
             <div class="modal-footer">
                 <button id="deleteButton" type="button" class="btn btn-default fa fa-trash"></button>
@@ -71,124 +62,13 @@
                 <button id="saveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
             </div>
         </div>
-=======
-                        <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
-                    </div>
-                    <br />
-                    @*identificador*@
-                    <p>Identificador</p>
-                    <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
->>>>>>> origin/master
 
     </div>
 </div>
 
 
-@*modal de mensajes*@
-
-<!-- Modal -->
-<div class="modal fade bd-example-modal-sm" id="modalMensajes" role="dialog">
-    <div class="modal-dialog modal-sm">
-
-        <!-- Modal content-->
-        <div id="modalMensajescontent" class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="modalMensajestitulo" class="modal-title">Agregar Mensaje</h4>
-            </div>
-            <div class="modal-body">
-
-
-            </div>
-
-
-
-            @*botones*@
-            <div class="modal-footer">
-                <button id="modalMensajesdeleteButton" type="button" class="btn btn-default fa fa-trash"></button>
-                <button id="modalMensajesconfirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
-                <button id="modalMensajessaveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
-            </div>
-        </div>
-<<<<<<< HEAD
-
-    </div>
-</div>
-@*fin modal mensajes*@ 
-=======
-    </div>
->>>>>>> origin/master
-
-
-    <hr />
-    <table id="example" class="display" width="95%"></table>
-
-<h3> Configuración de mensajes</h3>
-
-<button class="btn btn-primary" id="agregarMensaje">Agregar mensaje </button>
-
-<br/>
-<br />
-
-@*datatable con mensajes*@
-
-<table id="mensajes" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-        </tr>
-        <tr>
-            <td>Garrett Winters</td>
-            <td>Accountant</td>
-            <td>Tokyo</td>
-            <td>63</td>
-            <td>2011/07/25</td>
-            <td>$170,750</td>
-        </tr>
-        <tr>
-            <td>Ashton Cox</td>
-            <td>Junior Technical Author</td>
-            <td>San Francisco</td>
-            <td>66</td>
-            <td>2009/01/12</td>
-            <td>$86,000</td>
-        </tr>
-        <tr>
-            <td>Cedric Kelly</td>
-            <td>Senior Javascript Developer</td>
-            <td>Edinburgh</td>
-            <td>22</td>
-            <td>2012/03/29</td>
-            <td>$433,060</td>
-        </tr>
-    </tbody>
-</table>
-<br /><br />
+<hr />
+<table id="example" class="display" width="95%"></table>
 
 <script>
 
