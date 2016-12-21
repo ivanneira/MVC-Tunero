@@ -86,6 +86,25 @@
             </div>
             <div class="modal-body">
 
+                @*estado de mensaje*@
+                <p>Estado del mensaje</p>
+                <div>
+
+                    <select id="estado" class="selectpicker" data-style="btn-default">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+
+                    </select>
+                </div>
+
+                <br/>
+                <br />
+
+                @*texto del mensaje*@
+                <div class="form-group">
+                    <label for="comment">Texto del mensaje:</label>
+                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                </div>
 
             </div>
 
@@ -93,9 +112,9 @@
 
             @*botones*@
             <div class="modal-footer">
-                <button id="modalMensajesdeleteButton" type="button" class="btn btn-default fa fa-trash"></button>
-                <button id="modalMensajesconfirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
-                <button id="modalMensajessaveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+                <button id="mdeleteButton" type="button" class="btn btn-default fa fa-trash"></button>
+                <button id="mconfirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
+                <button id="msaveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
             </div>
         </div>
 
@@ -199,7 +218,7 @@
             $("#titulo").text("Agregar consultorio");
             tipo = "agregar";
             crearModal("agregar");
-            
+
         });
 
 
@@ -321,6 +340,32 @@
 
         }
 
+        //configuración del lenguaje para datatable
+        var languageConfig = {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_,  de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        };
+
 
         //llenado del datatable
         $.ajax({
@@ -340,30 +385,7 @@
                         data: datax,
                         responsive: true,
                         //configuración de lenguaje
-                        language:{
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                            "sInfo":           "Mostrando registros del _START_ al _END_,  de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
-                        },
+                        language: languageConfig,
                         //fin configuración de lenguaje
                         columns: [
                             { title: "Activo", data: "Activo" },
@@ -488,26 +510,30 @@
         //---------------------------------------------------Datatable de mensajes
 
         $("#agregarMensaje").click(function() {
+            $("#mdeleteButton").hide();
+            $("#mconfirmDelete").hide();
             $('#modalMensajes').modal({ show: true,backdrop: 'static', keyboard: false });
         });
 
 
         $("#mensajes").DataTable();
 
+        @*$.ajax({
+            type: "POST",
+            url: "@Url.Action("GetMensajesJsonResult", "Config")",
+            success: function(data) {
+                console.dir(data)
+
+            },
+            error: function(e) {
+                event.stopPropagation();
+                alert("error al acceder al servidor");
+
+            }
+
+        });*@
+
     });
 
 
 </script>
-
-@*<style>
-
-
-    #mcontent {
-       /* width: 350px;*/
-    }
-
-    #mcontent > div.modal-body > div.nprofesional > div > div {
-        /* width: 300px;*/
-    }
-
-</style>*@
