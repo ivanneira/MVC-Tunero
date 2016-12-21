@@ -138,10 +138,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\ionicons.min.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\marquee\img\control-pause.png" />
     <Content Include="Content\marquee\img\skewed_print.png" />
     <Content Include="Content\marquee\styles.css" />
+    <Content Include="Content\select.dataTables.min.css" />
     <Content Include="Content\sound\ion.sound.js" />
     <Content Include="Content\sound\ion.sound.min.js" />
     <Content Include="Content\sound\sounds\beer_can_opening.aac" />
@@ -252,7 +257,10 @@
     <Content Include="img\LogoGobMSP.png" />
     <Content Include="img\sjlogo.png" />
     <Content Include="packages.config" />
-    <Content Include="Scripts\dataTables.altEditor.free.js" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\dataTables.responsive.min.js" />
+    <Content Include="Scripts\dataTables.select.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

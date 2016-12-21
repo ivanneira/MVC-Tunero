@@ -208,7 +208,7 @@
                         //console.dir(data);
                         var paciente = [];
                         var i=0;
-                        if(!typeof($("#hora"))=='undefined')
+                        if(typeof(data[0].FechaHora) != 'undefined')
                         {
                             $("#hora").text(data[0].FechaHora);
                         }
