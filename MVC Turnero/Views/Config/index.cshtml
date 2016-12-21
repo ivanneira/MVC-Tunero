@@ -131,7 +131,7 @@
                         error: function(e) {
                             event.stopPropagation();
                             alert("error al acceder al servidor");
-                            console.dir(data);
+                            //console.dir(data);
                         }
 
                     });
@@ -151,13 +151,12 @@
                         },
                             url: "@Url.Action("EditProfesionalesJsonResult", "Config")",
                         success: function(data) {
-                            debugger 
                             verificaGuardado(data);
                         },
                         error: function(e) {
                             event.stopPropagation();
                             alert("error al acceder al servidor");
-                            console.dir(data);
+                            //console.dir(data);
                         }
 
                     });
@@ -228,7 +227,7 @@
             //dataType: dataType,
             success: function(datax) {
 
-                console.log(datax);
+                //console.log(datax);
 
                 var table = $('#example')
                     .DataTable({
