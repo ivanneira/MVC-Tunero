@@ -5,70 +5,169 @@
 <br /><br />
 
 <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
-
-<!-- Modal -->
+ 
+<!-- Modal de consultorios -->
 <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
 
-            <!-- Modal content-->
-            <div id="mcontent" class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 id="titulo" class="modal-title">Editar consultorio</h4>
+        <!-- Modal content-->
+        <div id="mcontent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="titulo" class="modal-title">Editar consultorio</h4>
+            </div>
+            <div class="modal-body">
+
+                @*estado de consultorio*@
+                <p>Estado del consultorio</p>
+                <div>
+
+                    <select id="estado" class="selectpicker" data-style="btn-default">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+
+                    </select>
                 </div>
-                <div class="modal-body">
+                <br/>
 
-                    @*estado de consultorio*@
-                    <p>Estado del consultorio</p>
-                    <div>
+                @*nombre de consultorio*@
+                <div class="cnombre">
 
-                        <select id="estado" class="selectpicker" data-style="btn-default">
-                            <option value="1">Activo</option>
-                            <option value="0">Inactivo</option>
-
-                        </select>
-                    </div>
-                    <br />
-
-                    @*nombre de consultorio*@
-                    <div class="cnombre">
-
-                        <p>Nombre de Consultorio</p>
-                        <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
-
-                    </div>
-                    <br />
-
-                    @*nombre de profesional*@
-                    <div class="nprofesional">
-
-                        <p>Nombre del Profesional</p>
-
-                        <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default" ></select>
-                    </div>
-                    <br />
-                    @*identificador*@
-                    <p>Identificador</p>
-                    <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
+                    <p>Nombre de Consultorio</p>
+                    <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
 
                 </div>
+                <br/>
 
+                @*nombre de profesional*@
+                <div class="nprofesional">
 
+                    <p>Nombre del Profesional</p>
 
-                @*botones*@
-                <div class="modal-footer">
-                    <button id="deleteButton" type="button" class="btn btn-default fa fa-trash"></button>
-                    <button id="confirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
-                    <button id="saveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+                    <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
                 </div>
+                <br/>
+                @*identificador*@
+                <p>Identificador</p>
+                <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
+
             </div>
 
+
+
+            @*botones*@
+            <div class="modal-footer">
+                <button id="deleteButton" type="button" class="btn btn-default fa fa-trash"></button>
+                <button id="confirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
+                <button id="saveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+            </div>
         </div>
+
+    </div>
 </div>
+
+
+@*modal de mensajes*@
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-sm" id="modalMensajes" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div id="modalMensajescontent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="modalMensajestitulo" class="modal-title">Agregar Mensaje</h4>
+            </div>
+            <div class="modal-body">
+
+
+            </div>
+
+
+
+            @*botones*@
+            <div class="modal-footer">
+                <button id="modalMensajesdeleteButton" type="button" class="btn btn-default fa fa-trash"></button>
+                <button id="modalMensajesconfirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
+                <button id="modalMensajessaveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@*fin modal mensajes*@ 
 
 
 <hr />
 <table id="example" class="display" width="95%"></table>
+
+<h3> Configuración de mensajes</h3>
+
+<button class="btn btn-primary" id="agregarMensaje">Agregar mensaje </button>
+
+<br/>
+<br />
+
+@*datatable con mensajes*@
+
+<table id="mensajes" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+        </tr>
+        <tr>
+            <td>Garrett Winters</td>
+            <td>Accountant</td>
+            <td>Tokyo</td>
+            <td>63</td>
+            <td>2011/07/25</td>
+            <td>$170,750</td>
+        </tr>
+        <tr>
+            <td>Ashton Cox</td>
+            <td>Junior Technical Author</td>
+            <td>San Francisco</td>
+            <td>66</td>
+            <td>2009/01/12</td>
+            <td>$86,000</td>
+        </tr>
+        <tr>
+            <td>Cedric Kelly</td>
+            <td>Senior Javascript Developer</td>
+            <td>Edinburgh</td>
+            <td>22</td>
+            <td>2012/03/29</td>
+            <td>$433,060</td>
+        </tr>
+    </tbody>
+</table>
+<br /><br />
 
 <script>
 
@@ -382,6 +481,15 @@
                 $("#confirmDelete").show();
             });
 
+
+        //---------------------------------------------------Datatable de mensajes
+
+        $("#agregarMensaje").click(function() {
+            $('#modalMensajes').modal({ show: true,backdrop: 'static', keyboard: false });
+        });
+
+
+        $("#mensajes").DataTable();
 
     });
 
