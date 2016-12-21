@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "Llamador de pacientes";
+}
+
+
+
+    <div id="header" class="row headerColor">
+        @*<div class="col-md-3 col-lg-3 sysLogo">
+            <center>
+                <img src="~/img/LogoGobMSP.png" class="img-responsive img-thumbnail" />
+            </center>
+        </div>*@
+        <div class="col-lg-6 csTitulo">
+            <center>
+                <h2>
+                    <label id="csNombre">@ViewBag.csNombre</label>
+                </h2>
+            </center>
+        </div>
+        @*<div class="col-lg-4"></div>*@
+        <div class="col-lg-6 reloj">
+            @*reloj*@
+
+            <label id="hora"  ></label>
+
+            @*<div class="sysClima clima">
+                <div class="weather-temp col-lg-8 col-md-8 col-xs-8" >
+                </div>
+                <div class="weather-img img-responsive col-lg-4 col-md-4 col-xs-4" >
+                </div>
+                <div class="weather-info col-lg-12 col-md-12 col-xs-12" >
+                </div>
+            </div>*@
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        
+    @{
+
+        var color = 0;
+        var cssClass = "";
+        for (var i = 0; i < ViewBag.cantSalas; i++)
+        {
+
+            switch (color)
+            {
+                case 0:
+                    {
+                        cssClass = "aqua";
+                    } break;
+
+                case 1:
+                    {
+                        cssClass = "aqua"; //green
+                    }
+                    break;
+
+                case 2:
+                    {
+                        cssClass = "aqua"; //yellowe
+                    }
+                    break;
+
+                case 3:
+                    {
+                        cssClass = "aqua"; //red
+                    }
+                    break;
+
+                default: {
+                        color = 0;
+                    } break;
+
+            }
+
+            var x = "<div id='consultorio_" + (ViewBag.ConsultorioId[i]) + "' class='col-md-" + (12 / ViewBag.cantSalas) + "'> " +
+                "<div class='small-box bg-" + cssClass + "'> " +
+                    "<div class='inner'> " +
+                        "<h3>"+ ViewBag.ConsultorioNombre[i] + "</h3>" +
+                        "<p id='profesional_table_" + (ViewBag.ConsultorioId[i]) + "'>No disponible</p> " +
+                    "</div> " +
+                    "<div class='icon'> " +
+                        "<i class='fa fa-user-md' style='vertical-align:text-top'></i> " +
+                    "</div> " +
+                    "<a href='javasctipt:;' class='small-box-footer'> </a> " +
+                "</div> " +
+                "<div> " +
+                    "<table  class='table'> " +
+                        "<thead> " +
+                            "<tr> " +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody  id='consultorio_table_" + (ViewBag.ConsultorioId[i]) + "'>" +
+                        "</tbody>" +
+                    "</table>" +
+                "</div>" +
+            "</div>";
+
+            color++;
+            var myHtmlString = new HtmlString(x);
+            @myHtmlString;
+        }
+
+        }
+
+
+
+    </div>
+       
+    <hr />
+
+
+    <div class="row" >
+      
+      
+        <footer class="footer headerColor">
+
+            <div class="col-md-12" style="width:100% !important; margin-left:auto; margin-right:auto; float:inherit; background-color: #fff">
+                <div class="row" style="background-color: #dce5ee">
+                    <div class="col-md-4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="blanco  text-center borde ">
+                                        EN LISTA DE ESPERA
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="llamado  text-center borde ">
+                                        ATENCION EN CURSO
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="urgencia  text-center borde">
+                                        URGENCIA
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            
+                    <marquee class="marquee">
+                        <span>Lavarse las manos previene enfermedades y salva vidas</span>
+                        |
+                        <span>Eliminar los recipientes que acumulen agua, principal medida contra el Dengue</span>
+                        |
+                        <span>La meningitis viral es una infeccion de las meninges (una membrana delgada que cubre el cerebro y la medula espinal)</span>
+                    </marquee>
+                    <div class="separador"></div>
+                    <img src="~/img/sjlogo.png"> <b>M</b>inisterio de <b>S</b>alud <b>P</b>ública / <b>A</b>rea <b>I</b>nformática - <b>D</b>esarrollo de <b>S</b>istemas - <b>C</b>opyright © 2016 <b>T</b>odos los derechos reservados - <b>G</b>obierno de la <b>p</b>rovincia de <b>S</b>an <b>J</b>uan.
+        </footer>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            getConsultorioData();
+            getClima();
+            sound();
+            ion.sound.play("Bell-tone");
+
+        });
+
+        /*CARGA INICIAL DE DATOS DEL CLIMA*/
+        function getClima() {
+
+            loadWeather("SAN JUAN, AR", "");
+            /*
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    loadWeather(position.coords.latitude + ',' + position.coords.longitude);
+
+                });
+            } else {
+                loadWeather("SAN JUAN, AR", "");
+            }
+            */
+        }
+
+        /*FUNCION QUE OBTIENE DATOS DE CONSULTORIO*/
+        function getConsultorioData()
+        {
+
+                $.ajax({
+                    url: '@Url.Action("getConsultorioData", "Consultorio")',
+                    type: 'post',
+                    data: { sistema: "@ViewContext.RouteData.Values["sistema"]",  csId: @ViewBag.csId },
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.dir(data);
+                        var paciente = [];
+                        var i=0;
+                        if(typeof(data[0].FechaHora) != 'undefined')
+                        {
+                            $("#hora").text(data[0].FechaHora);
+                        }
+
+                        $(".nombrePacientes").remove();
+                        for (var index in data) {
+
+                            $('#profesional_table_'+data[index]["consultorioId"]).html('' + data[index]["profesional"] + '');
+
+                            if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
+                            {
+                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
+                            }
+                            else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
+                            {
+                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
+                            }
+                            else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
+                            {
+                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
+                            }
+                            else if(data[index]['estado'] == 0 && data[index]['urgencia'] == 1) // En espera Urgencia
+                            {
+                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia'>"+ data[index]['paciente'] + "</td></tr>");
+                            }
+
+                        }
+                        //ion.sound.play("Email-notification-sound");
+                    },
+                    error: function () {
+                        //$('#consultorio_table_1').html("Error");
+                        console.log("error");
+                    }
+                });
+
+            setTimeout(function () { getConsultorioData() }, 15000); //LOS DATOS DE CONSULTORIOS DE ACTUALIZARAN CADA 5 SEGUNDOS
+        }
+
+
+        /*FUNCION QUE OBTIENE DATOS DEL CLIMA*/
+        function loadWeather(location, woeid) {
+
+            $.simpleWeather({
+                location: location,
+                woeid: woeid,
+                unit: 'c',
+                success: function(weather) {
+
+                    country = weather.country;
+                    city = weather.city;
+                    temp = weather.temp + '&deg;';
+                    code = weather.code + ".svg";
+
+                    wcode = '<img  src="@Url.Content("~/Content/weather/images/weathericons/")' +
+                        weather.code +
+                        ".svg" +
+                        '">'
+                    wind = ' <small> <span class="ion-leaf"></span> ' +
+                        weather.wind.speed +
+                        weather.units.speed +
+                        '</small>';
+                    humidity = '<small><span class="ion-waterdrop"></span> ' + weather.humidity + ' %</small>';
+                    $(".weather-info").text(city + ', ' + country);
+                    //$(".weather-temp").html(temp + 'C' + '<p>'+  humidity +  wind+ '</p>');
+                    $(".weather-temp").html(temp + 'C');
+                    //$(".weather-img").html(wcode);
+                },
+
+                error: function(error) {
+                    //console.log(error);
+                }
+            });
+
+            setTimeout(function() { getClima() }, 60000); //EL CLIMA SE ACTUALIZARA CADA 1 MINUTO
+        }
+
+
+        function sound() {
+            ion.sound({
+                sounds: [
+                    {
+                        name: "Bell-tone"
+                    },
+                    {
+                        name: "Email-notification-sound",
+                        volume: 0.2
+                    },
+                    {
+                        name: "alert_sound",
+                        volume: 0.3,
+                        preload: false
+                    }
+                ],
+                volume: 0.5,
+                path: "@Url.Content("~/Content/sound/sounds/")",
+                preload: true
+            });
+        }
+
+        
+    </script>

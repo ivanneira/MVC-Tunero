@@ -1,0 +1,306 @@
+    @-webkit-keyframes pulse {
+      from {
+        -webkit-transform: scale(1.0);
+        opacity: 0.75;
+      }
+      50% {
+        -webkit-transform: scale(1.03);
+        opacity: 1.0;
+      }
+      to { 
+        -webkit-transform: scale(1.0);
+        opacity: 0.75;
+      }
+    }
+
+    .borde{
+
+        border: solid 2px #000 !important;
+    }
+    .urgencia {
+        background-color: red; 
+        font-weight:bold;
+        color: #fff;
+    }
+
+    .llamado {
+        background-color: green; 
+        font-weight:bold;
+        color: #fff;
+    }
+
+    .blanco {
+        background-color: #fff; 
+        color: #555;
+    }
+    
+    .pulse { 
+      -webkit-animation-name: pulse; 
+      -webkit-animation-duration: 1s; 
+      -webkit-animation-iteration-count: 5; 
+    }
+
+   
+    .container-fluid{
+        background-color:#dce5ee;
+    }
+
+    #body {
+        background-color:#dce5ee;
+        color:#222;
+    }
+
+
+    .table-bordered td {
+        font-size:2vw;
+    }
+
+    .headerColor {
+                background-color: #008bc4;
+    }
+    .csTitulo h2 {
+        font-family: 'Raleway',sans-serif;
+        font-size:40px;
+        text-align:left; 
+        margin-top:30px;
+        min-height:80px;
+        color:#fff;
+    }
+
+    .weather-temp{
+        background-color:#fff; 
+        height:70%; 
+        min-height:70%;
+        padding-top:5%;
+        color:#013246;
+        border-top-left-radius:5px;
+    }
+
+    .weather-img{
+        line-height:10%;
+        background-color:#fff; 
+        height:70%; 
+        vertical-align:middle;
+        color:#013246;
+        border-top-right-radius:5px;
+    }
+
+    .weather-img img{
+        width:100%;
+        line-height:10%;
+        background-color:#fff; 
+        height:100%; 
+        vertical-align:middle;
+        color:#013246;
+    }
+
+    .weather-info{
+        background-color:#013246; 
+        height:30%; 
+        line-height:100%;
+        display: table-cell; 
+        vertical-align: middle;
+        font-size:.7em;
+        border-bottom-right-radius:5px;
+        border-bottom-left-radius:5px;
+    }
+
+    .sysLogo img {
+        margin-top:10px;
+        background-color:#fff;
+        text-align:center;
+        max-height:100px;
+        vertical-align:middle;
+        line-height:100px;
+        min-height:100px;
+        height:100px;
+
+    }
+
+    .sysClima {
+        text-align:center;
+        min-height:100px;
+        height:100px;
+        margin-top:10px;
+        color:#fff;
+        background-color:#fff;
+        border-radius: 10px;
+    
+    }
+
+    .boxInfo {
+        text-align:center;
+        background-color:#fbfbfb;
+        border:solid 1px lightblue;
+        line-height:20px;
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        font-size:1.5vw;
+    }
+
+
+    .especialidad {
+        font-weight:bold;
+        font-size:1.3vw;
+    }
+
+
+    .footer {
+        background-color:#013246;
+        bottom: 0;
+        height: auto;
+        position: fixed;
+        width: 100%;
+        text-align:center;
+        line-height:30px;
+        color:#fff;
+    }
+
+
+    .clima span {
+        font-family: 'Raleway',sans-serif;
+    }
+    .clima {
+        font-family: 'Raleway',sans-serif;
+        font-size:35px;
+        line-height:15px;
+        font-weight:bold;
+    }
+
+     .clima small{
+        font-family: 'Raleway',sans-serif;
+        font-size:15px;
+    }
+
+     .separador{
+         background-color:#fff;
+         height:5px;
+         width:100%;
+     }
+
+
+     .bg-aqua{
+
+         color: #fff !important;
+         background-color: #00c0ef !important;
+         
+     }
+ 
+     .bg-yellow{
+         color: #fff !important;
+         background-color: #db8b0b !important;
+     }
+     .bg-green{
+          background-color: #00a65a !important;
+          color: #fff !important;
+     }
+
+     .bg-red{
+           background-color: #d33724 !important;
+           color: #fff !important;
+     }
+
+    .small-box {
+      border-radius: 2px;
+      position: relative;
+      display: block;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+    .small-box > .inner {
+      padding: 10px;
+    }
+    .small-box > .small-box-footer {
+      position: relative;
+      text-align: center;
+      padding: 3px 0;
+      color: #fff;
+      color: rgba(255, 255, 255, 0.8);
+      display: block;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+    }
+    .small-box > .small-box-footer:hover {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.15);
+    }
+    .small-box h3 {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0 0 10px 0;
+      white-space: nowrap;
+      padding: 0;
+    }
+    .small-box p {
+      font-size: 15px;
+    }
+    .small-box p > small {
+      display: block;
+      color: #f9f9f9;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .small-box h3,
+    .small-box p {
+      z-index: 5;
+    }
+    .small-box .icon {
+      -webkit-transition: all 0.3s linear;
+      -o-transition: all 0.3s linear;
+      transition: all 0.3s linear;
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      z-index: 0;
+      font-size: 90px;
+      color: rgba(0, 0, 0, 0.15);
+    }
+    .small-box:hover {
+      text-decoration: none;
+      color: #f9f9f9;
+    }
+    .small-box:hover .icon {
+      font-size: 95px;
+    }
+
+    .table>thead>tr>th{
+        font-family: 'Rubik', sans-serif;
+        font-size:1.3vw;
+    }
+
+
+    .table>tbody>tr>td{
+        font-family: 'Rubik', sans-serif;
+        font-size:1.3vw;
+    }
+
+@media (max-width: 767px) {
+    .small-box {
+        text-align: center;
+    }
+
+        .small-box .icon {
+            display: none;
+        }
+
+        .small-box p {
+            font-size: 12px;
+        }
+}
+
+/*agregado por yo*/
+.inputs {
+    width: 220px;
+}
+
+#header {
+    height: 80px !important;
+}
+
+.reloj {
+    color: white;
+    font-size: 60px;
+    text-align: right;
+}
