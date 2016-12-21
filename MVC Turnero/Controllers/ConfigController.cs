@@ -116,7 +116,7 @@ namespace MVC_Turnero.Controllers
         public JsonResult SaveProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero)
         {
 
-            if (!CheckProfesionalesJsonResult(sistema, csId, ConsultorioNumero))
+            if (!CheckProfesionalesJsonResult(sistema, csId, ConsultorioNumero,EstadoConsultorio))
             {
                 return Json("REPEATEDID");
             }
@@ -150,7 +150,7 @@ namespace MVC_Turnero.Controllers
 
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
-        public bool CheckProfesionalesJsonResult(string sistema, int? csId, int ConsultorioNumero)
+        public bool CheckProfesionalesJsonResult(string sistema, int? csId, int ConsultorioNumero, int EstadoConsultorio)
         {
             bool result = true;
             SqlConnection cx = null;
@@ -159,7 +159,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "select activo from catTurneroConsultorio where numero = " + ConsultorioNumero ;
+                consulta = "select activo from catTurneroConsultorio where numero = " + ConsultorioNumero + " and activo=1 and activo=" + EstadoConsultorio ;
             }
 
 
@@ -197,7 +197,7 @@ namespace MVC_Turnero.Controllers
             SqlConnection cx = null;
             string consulta = "";
 
-            if (!CheckProfesionalesJsonResult(sistema, csId, ConsultorioNumero))
+            if (!CheckProfesionalesJsonResult(sistema, csId, ConsultorioNumero,EstadoConsultorio))
             {
                 return Json("REPEATEDID");
             }
@@ -225,6 +225,7 @@ namespace MVC_Turnero.Controllers
             return Json(result);
         }
 
+
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult DelProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero)
@@ -238,7 +239,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "delete from catTurneroConsultorio where activo = " + EstadoConsultorio + " and consultorio='" + ConsultorioNombre + "' and PerConId=" + ProfesionalID + " and numero = " + ConsultorioNumero + " and id_catTurnero=" + csId;
+                consulta = "delete from catTurneroConsultorio where activo = " + EstadoConsultorio + " and consultorio='" + ConsultorioNombre + "' and PerConId=" + ProfesionalID + " and numero = "+ ConsultorioNumero + " and id_catTurnero=" + csId;
             }
 
             SqlDataAdapter da = new SqlDataAdapter();
@@ -257,7 +258,6 @@ namespace MVC_Turnero.Controllers
 
             return Json(result);
         }
-
 
     }
 }

@@ -71,8 +71,6 @@ namespace MVC_Turnero.Controllers
                         prioridad = row["prioridad"].ToString(),
                         urgencia = row["urgencia"].ToString(),
                         FechaHora = DateTime.Now.ToString("HH:mm")
-
-
                     };
 
                     y.Add(x);
@@ -96,7 +94,6 @@ namespace MVC_Turnero.Controllers
             public string estado { get; set; }
             public string consultorioId { get; set; }
             public string FechaHora { get; set; }
-
         }
 
 

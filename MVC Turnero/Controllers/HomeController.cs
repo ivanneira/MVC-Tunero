@@ -63,7 +63,7 @@ namespace MVC_Turnero.Controllers
 
                 if (consultorioId == "")
             {
-                consulta = "select id,consultorio from catTurneroConsultorio where id_catTurnero = @column";
+                consulta = "select id,consultorio from catTurneroConsultorio where id_catTurnero = @column and activo = 1";
                 da = new SqlDataAdapter(consulta, cx);
                 da.SelectCommand.Parameters.AddWithValue("@column", catTurneroId);
             }
@@ -79,7 +79,7 @@ namespace MVC_Turnero.Controllers
                     consulta += " OR numero=@column_n" + i ;
                 }
 
-                consulta += "))";
+                consulta += ") and activo = 1)";
 
                 da = new SqlDataAdapter(consulta, cx);
                 da.SelectCommand.Parameters.AddWithValue("@column", j[0]);

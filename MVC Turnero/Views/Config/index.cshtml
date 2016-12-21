@@ -1,71 +1,103 @@
 ﻿@{
     ViewBag.Title = "Configuración";
 }
-<h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
-<br /><br />
 
 <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
+<button class="btn btn-warning" id="agregarmsj">Argegar Mensajes </button>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-sm" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
 
-            <!-- Modal content-->
-            <div id="mcontent" class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 id="titulo" class="modal-title">Editar consultorio</h4>
-                </div>
-                <div class="modal-body">
-
-                    @*estado de consultorio*@
-                    <p>Estado del consultorio</p>
-                    <div>
-
-                        <select id="estado" class="selectpicker" data-style="btn-default">
-                            <option value="1">Activo</option>
-                            <option value="0">Inactivo</option>
-
-                        </select>
-                    </div>
-                    <br />
-
-                    @*nombre de consultorio*@
-                    <div class="cnombre">
-
-                        <p>Nombre de Consultorio</p>
-                        <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
-
-                    </div>
-                    <br />
-
-                    @*nombre de profesional*@
-                    <div class="nprofesional">
-
-                        <p>Nombre del Profesional</p>
-
-                        <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default" ></select>
-                    </div>
-                    <br />
-                    @*identificador*@
-                    <p>Identificador</p>
-                    <input id="identificador" class="form-control inputs" type="number" placeholder="identificador" aria-describedby="basic-addon2">
-
-                </div>
-
-
-
-                @*botones*@
-                <div class="modal-footer">
-                    <button id="deleteButton" type="button" class="btn btn-default fa fa-trash"></button>
-                    <button id="confirmDelete" type="button" class="btn btn-danger" data-dismiss="modal">BORRAR REGISTRO</button>
-                    <button id="saveButton" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
-                </div>
+        <!-- Modal content-->
+        <div id="mcontent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="titulo" class="modal-title">Editar consultorio</h4>
             </div>
-
+            <div class="modal-body">
+                @*estado de consultorio*@
+                <p>Estado del consultorio</p>
+                <div >
+                    <select id="estado" class="selectpicker" data-style="btn-default">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <br/>
+                @*nombre de consultorio*@
+                <div class="cnombre">
+                    <p>Nombre de Consultorio</p>
+                    <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
+                </div>
+                <br/>
+                @*nombre de profesional*@
+                <div class="nprofesional">
+                    <p>Nombre del Profesional</p>
+                    <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default">
+                    </select>
+                </div>
+                <br/>
+                @*identificador*@
+                <p>Identificador</p>
+                <input id="identificador" class="form-control inputs" type="number" class="form-control" placeholder="identificador" aria-describedby="basic-addon2">
+            </div>
+            @*botones*@
+            <div class="modal-footer">
+                <button id="deleteButton" type="button" class="btn btn-danger data-dismiss="modal" >Borrar</button>
+                <button id="saveButton" type="button" class="btn btn-default" data-dismiss="modal">Guardar</button>
+            </div>
         </div>
+
+    </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-sm" id="myModalmsj" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div id="mcontent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="titulo" class="modal-title">Editar consultorio</h4>
+            </div>
+            <div class="modal-body">
+                @*estado de consultorio*@
+                <p>Estado del consultorio</p>
+                <div>
+                    <select id="estado" class="selectpicker" data-style="btn-default">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <br />
+                @*nombre de consultorio*@
+                <div class="cnombre">
+                    <p>Nombre de Consultorio</p>
+                    <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
+                </div>
+                <br />
+                @*nombre de profesional*@
+                <div class="nprofesional">
+                    <p>Nombre del Profesional</p>
+                    <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
+                </div>
+                <br />
+                @*identificador*@
+                <p>Identificador</p>
+                <input id="identificador" class="form-control inputs" type="number" class="form-control" placeholder="identificador" aria-describedby="basic-addon2">
+            </div>
+            @*botones*@
+            <div class="modal-footer">
+                <button id="deleteButton" type="button" class="btn btn-danger data-dismiss="modal">Borrar</button>
+                <button id="saveButton" type="button" class="btn btn-default" data-dismiss="modal">Guardar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <hr />
 <table id="example" class="display" width="95%"></table>
@@ -77,7 +109,6 @@
         var profesionales;
         var comboCargado = false;
 
-        $("#confirmDelete").hide();
         //carga una sola vez todos los profesionales
         $.post("@Url.Action("GetProfesionalesJsonResult","Config")", {sistema: "@ViewContext.RouteData.Values["sistema"]",csId: @ViewContext.RouteData.Values["csId"]})
             .done(function(result) {
@@ -92,13 +123,13 @@
         // en la funcion del botón guardar se modifican los datos para guardar después mediante un controlador
 
         //este sería el evento "editar" en el datatable que puede estar en el mismo onclick de las rows
+
         $("#agregar").click(function () {
             $("#titulo").text("Agregar consultorio");
             tipo = "agregar";
             crearModal("agregar");
             
         });
-
 
 
         //el close va a tener los eventos que guardan y las verificaciones
@@ -207,15 +238,13 @@
                 $("#consultorio").val("");
                 $("#identificador").val("");
                 $("#consultorio").removeClass("btn-danger");
-                $("#deleteButton").hide();
-                $("#confirmDelete").hide();
 
                 //cuando se edita
             }else if (editaoagrega == "editar") {
                 $("#titulo").text("Editar consultorio");
             }
 
-            $('#myModal').modal({ show: true,backdrop: 'static', keyboard: false });
+            $('#myModal').modal({ show: true });
 
         }
 
@@ -224,87 +253,55 @@
         $.ajax({
             type: "POST",
             url: "@Url.Action("GetConfigConsultorioJsonResult","Config")",
-            data:  {sistema: "@ViewContext.RouteData.Values["sistema"]",csId: @ViewContext.RouteData.Values["csId"] },
+            data:  {sistema: "@ViewContext.RouteData.Values["sistema"]",csId: @ViewContext.RouteData.Values["csId"]},
             //dataType: dataType,
-            success: function(datax) {
+            success: function(datax){
 
                 console.log(datax);
 
-                var table = $('#example')
-                    .DataTable({
-                        "sPaginationType": "full_numbers",
-                        dom: 'Bfrtip', // Needs button container
-                        select: 'single',
-                        data: datax,
-                        responsive: true,
-                        //configuración de lenguaje
-                        language:{
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                            "sInfo":           "Mostrando registros del _START_ al _END_,  de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
-                        },
-                        //fin configuración de lenguaje
-                        columns: [
-                            { title: "Activo", data: "Activo" },
-                            { title: "Consultorio", data: "ConsultorioNombre" },
-                            { title: "Profesional", data: "Profesional" },
-                            { title: "Identificador", data: "identificador" }
-                        ]
-                    });
+                var table = $('#example').DataTable( {
+                    "sPaginationType": "full_numbers",
+                    dom: 'Bfrtip',        // Needs button container
+                    select: 'single',
+                    data: datax,
+                    responsive: true,
+                    columns: [
+                        { title: "Activo", data: "Activo" },
+                        { title: "Consultorio", data: "ConsultorioNombre" },
+                        { title: "Profesional", data: "Profesional" },
+                        { title: "Identificador", data: "identificador" }
+                    ]
+                } );
 
                 //edicion cuando se clickee el row
-                $('#example tbody')
-                    .on('click',
-                        'tr',
-                        function() {
+                $('#example tbody').on('click', 'tr', function () {
 
-                            tipo = "editar";
+                    tipo = "editar";
 
-                            var data = table.row(this).data();
+                    var data = table.row( this ).data();
 
-                            $("#titulo").text("Editar consultorio");
+                    $("#titulo").text("Editar consultorio");
 
-                            tipo = "editar";
-                            cargarCombo();
-                            //lleno con los datos
-                            if (data.Activo == 1) {
-                                $("#estado").selectpicker('val', 1);
-                            } else {
-                                $("#estado").selectpicker('val', 0);
-                            }
-                            $("#consultorio").val(data.ConsultorioNombre);
-                            $("#identificador").val(data.identificador);
-                            $("#consultorio").removeClass("btn-danger");
-                            $("#profSelector").selectpicker('val', data.ProfesionalID);
-                            $("#deleteButton").show();
-                            $("#confirmDelete").hide();
+                    tipo = "editar";
+                    cargarCombo();
+                    //lleno con los datos
+                    if (data.Activo == 1) {
+                        $("#estado").selectpicker('val',1);
+                    } else {
+                        $("#estado").selectpicker('val',0);
+                    }
+                    $("#consultorio").val(data.ConsultorioNombre);
+                    $("#identificador").val(data.identificador);
+                    $("#consultorio").removeClass("btn-danger");
+                    $("#profSelector").selectpicker('val',data.ProfesionalID);
 
-                            $('#myModal').modal({ show: true, backdrop: 'static', keyboard: false });
-                        });
+                    $('#myModal').modal({ show: true });
+                } );
             }
         });
 
         function verificaIdentificador(value) {
-
+            
             if ($("#identificador").val() != "") {
                 return true;
             } else {
@@ -326,61 +323,44 @@
 
         function cargarCombo() {
 
-            if (!comboCargado) {
+            if(!comboCargado){
                 for (var index in profesionales) {
-
                     $("#profSelector")
-                        .append("<option value=" +
-                            profesionales[index].ProfesionalID +
-                            "> " +
-                            profesionales[index].Profesional +
-                            " </option>");
-
+                        .append("<option value=" + profesionales[index].ProfesionalID + "> " + profesionales[index].Profesional + " </option>");
                 }
             }
 
             comboCargado = true;
-            $('#profSelector').selectpicker('refresh');
+                $('#profSelector').selectpicker('refresh');
 
         }
 
-        $("#confirmDelete").click(function() {
+        $("#deleteButton").click(function() {
 
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        sistema: "@ViewContext.RouteData.Values["sistema"]",
-                        csId: @ViewContext.RouteData.Values["csId"],
-                        EstadoConsultorio: $("#estado").val(),
-                        ConsultorioNombre: $("#consultorio").val(),
-                        ProfesionalID: $("#profSelector").val(),
-                        ConsultorioNumero: $("#identificador").val()
-                    },
+
+            $.ajax({
+                type: "POST",
+                data: {
+                    sistema: "@ViewContext.RouteData.Values["sistema"]",
+                    csId: @ViewContext.RouteData.Values["csId"],
+                    EstadoConsultorio: $("#estado").val(),
+                    ConsultorioNombre: $("#consultorio").val(),
+                    ProfesionalID: $("#profSelector").val(),
+                    ConsultorioNumero: $("#identificador").val()
+                },
                     url: "@Url.Action("DelProfesionalesJsonResult", "Config")",
-                    success: function(data) {
-                        alert("El registro se borró correctamente");
-                        location.reload();
-                    },
-                    error: function(e) {
-                        event.stopPropagation();
-                        alert("error al acceder al servidor");
+                success: function(data) {
+                    alert("El registro se borró correctamente");
+                    location.reload();
+                },
+                error: function(e) {
+                    event.stopPropagation();
+                    alert("error al acceder al servidor");
 
-                    }
+                }
 
-                });
-
-            $("#deleteButton").show();
-            $("#confirmDelete").hide();
+           });
         });
-
-        $("#deleteButton")
-            .click(function() {
-
-
-
-                $("#deleteButton").hide();
-                $("#confirmDelete").show();
-            });
 
 
     });
@@ -388,8 +368,10 @@
 
 </script>
 
-@*<style>
-
+<style>
+    .inputs {
+        width: 220px;
+    }
 
     #mcontent {
        /* width: 350px;*/
@@ -398,5 +380,4 @@
     #mcontent > div.modal-body > div.nprofesional > div > div {
         /* width: 300px;*/
     }
-
-</style>*@
+</style>
