@@ -40,7 +40,8 @@
       -webkit-animation-iteration-count: 5; 
     }
 
-   
+    .background-config {
+    }   
     .container-fluid{
         background-color:#dce5ee;
     }
