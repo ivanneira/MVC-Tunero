@@ -265,6 +265,8 @@
     <Content Include="Scripts\dataTables.responsive.min.js" />
     <Content Include="Scripts\dataTables.select.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\mespeak.full.js" />
+    <Content Include="Scripts\mespeak.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

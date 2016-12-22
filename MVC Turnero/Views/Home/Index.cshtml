@@ -111,8 +111,6 @@
 
 
     <div class="row" >
-      
-      
         <footer class="footer headerColor">
 
             <div class="col-md-12" style="width:100% !important; margin-left:auto; margin-right:auto; float:inherit; background-color: #fff">
@@ -167,6 +165,13 @@
     </div>
 
 
+<script type="text/javascript">
+    //meSpeak.speak("Configuration and voice definition loaded.");
+    meSpeak.loadConfig("@Url.Content("~/Scripts/mespeak_config.json")");
+    meSpeak.loadVoice("@Url.Content("~/Scripts/voices/es-la.json")");
+    var x = 0;
+</script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -174,7 +179,8 @@
             //getClima();
             sound();
             ion.sound.play("Bell-tone");
-
+            meSpeak.speak("MORA  GOMEZ, AIDA  LILIANA");
+            //meSpeak.speak("Llamando al paciente: Delgado, Rolando: por consultorio 1","{ 'amplitude: 90', 'wordgap: 10', 'pitch: 190', 'speed: 100'}");
         });
 
         /*CARGA INICIAL DE DATOS DEL CLIMA*/
@@ -218,10 +224,18 @@
 
                             if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
                             {
+                               
                                 $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
                             }
                             else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
                             {
+                                 if(x==0)
+                                {
+                                    console.log(data[index]['paciente']);
+                                    //meSpeak.speak("Llamando al paciente: "+  data[index]['paciente'] + ": por consultorio 1","{ 'amplitude: 100', 'wordgap: 10', 'pitch: 190', 'speed: 100'}");
+                                    x=1;
+
+                                }
                                 $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
                             }
                             else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
@@ -235,6 +249,7 @@
 
                         }
                         //ion.sound.play("Email-notification-sound");
+                        
                     },
                     error: function () {
                         //$('#consultorio_table_1').html("Error");
