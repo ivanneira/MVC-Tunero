@@ -103,7 +103,7 @@
                 @*texto del mensaje*@
                 <div class="form-group">
                     <label for="comment">Texto del mensaje:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <textarea class="form-control" rows="5" id="textoMensaje"></textarea>
                 </div>
 
             </div>
@@ -384,7 +384,6 @@
                         responsive: true,
                         //configuración de lenguaje
                         language: languageConfig,
-                        //fin configuración de lenguaje
                         columns: [
                             { title: "Activo", data: "Activo" },
                             { title: "Consultorio", data: "ConsultorioNombre" },
@@ -507,7 +506,12 @@
 
         //---------------------------------------------------Datatable de mensajes
 
+        var mtipo = "agregar";
+
         $("#agregarMensaje").click(function() {
+
+            mtipo = "agregar";
+            $("#modalMensajestitulo").text("Agregar mensaje");
             $("#mdeleteButton").hide();
             $("#mconfirmDelete").hide();
             $('#modalMensajes').modal({ show: true,backdrop: 'static', keyboard: false });
@@ -516,11 +520,59 @@
 
         $("#mensajes").DataTable();
 
-        @*$.ajax({
+        $.ajax({
             type: "POST",
             url: "@Url.Action("GetMensajesJsonResult", "Config")",
             success: function(data) {
                 console.dir(data)
+
+                var table = $('#mensajes')
+                   .DataTable({
+                       "sPaginationType": "full_numbers",
+                       dom: 'Bfrtip', // Needs button container
+                       select: 'single',
+                       data: data,
+                       responsive: true,
+                       //configuración de lenguaje
+                       language: languageConfig,
+                       columns: [
+                           { title: "ID", data: "Activo" },
+                           { title: "Estado", data: "ConsultorioNombre" },
+                           { title: "Mensaje", data: "Profesional" },
+                           { title: "Hora Desde", data: "identificador" },
+                           { title: "Hora Hasta", data: "identificador" }
+                       ]
+                   });
+
+                //edicion cuando se clickee el row
+                $('#mensajes tbody')
+                    .on('click',
+                        'tr',
+                        function() {
+
+                            mtipo = "editar";
+
+                            var data = table.row(this).data();
+
+                            $("#modalMensajestitulo").text("Editar mensaje");
+
+                            //lleno con los datos CAMBIAR POR DATOS DE LO QUE TRAIGAN LOS MENSAJES
+                            //if (data.Activo == 1) {
+                            //    $("#estado").selectpicker('val', 1);
+                            //} else {
+                            //    $("#estado").selectpicker('val', 0);
+                            //}
+                            //$("#consultorio").val(data.ConsultorioNombre);
+                            //$("#identificador").val(data.identificador);
+                            //$("#consultorio").removeClass("btn-danger");
+                            //$("#profSelector").selectpicker('val', data.ProfesionalID);
+
+
+                            //muestra el modal
+                            $("#mdeleteButton").show();
+                            $("#mconfirmDelete").hide();
+                            $('#modalMensajes').modal({ show: true,backdrop: 'static', keyboard: false });
+                        });
 
             },
             error: function(e) {
@@ -529,7 +581,24 @@
 
             }
 
-        });*@
+        });
+
+        $("#mdeleteButton")
+            .click(function() {
+
+                $("#mdeleteButton").hide();
+                $("#mconfirmDelete").show();
+            });
+
+        $("#msaveButton")
+            .click(function() {
+                
+                if (mtipo == "agregar") {
+                    
+                }else {
+                    
+                }
+            });
 
     });
 
