@@ -18,9 +18,7 @@
         @*<div class="col-lg-4"></div>*@
         <div class="col-lg-6 reloj">
             @*reloj*@
-
             <label id="hora"  ></label>
-
             @*<div class="sysClima clima">
                 <div class="weather-temp col-lg-8 col-md-8 col-xs-8" >
                 </div>
@@ -31,17 +29,13 @@
             </div>*@
         </div>
     </div>
-
     <hr />
     <div class="row">
-        
     @{
-
         var color = 0;
         var cssClass = "";
         for (var i = 0; i < ViewBag.cantSalas; i++)
         {
-
             switch (color)
             {
                 case 0:
@@ -176,7 +170,7 @@
             //getClima();
             sound();
             ion.sound.play("Bell-tone");
-            meSpeak.speak("MORA  GOMEZ, AIDA  LILIANA");
+            //meSpeak.speak("MORA GOMEZ, AIDA LILIANA");
             //meSpeak.speak("Llamando al paciente: Delgado, Rolando: por consultorio 1","{ 'amplitude: 90', 'wordgap: 10', 'pitch: 190', 'speed: 100'}");
         });
 
