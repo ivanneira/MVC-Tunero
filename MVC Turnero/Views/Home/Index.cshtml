@@ -153,11 +153,7 @@
             </div>
             
                     <marquee class="marquee">
-                        <span>Lavarse las manos previene enfermedades y salva vidas</span>
-                        |
-                        <span>Eliminar los recipientes que acumulen agua, principal medida contra el Dengue</span>
-                        |
-                        <span>La meningitis viral es una infeccion de las meninges (una membrana delgada que cubre el cerebro y la medula espinal)</span>
+                        
                     </marquee>
                     <div class="separador"></div>
                     <img src="~/img/sjlogo.png"> <b>M</b>inisterio de <b>S</b>alud <b>P</b>ública / <b>A</b>rea <b>I</b>nformática - <b>D</b>esarrollo de <b>S</b>istemas - <b>C</b>opyright © 2016 <b>T</b>odos los derechos reservados - <b>G</b>obierno de la <b>p</b>rovincia de <b>S</b>an <b>J</b>uan.
@@ -176,6 +172,7 @@
 
         $(document).ready(function () {
             getConsultorioData();
+            getMensajes();
             //getClima();
             sound();
             ion.sound.play("Bell-tone");
@@ -318,6 +315,28 @@
                 volume: 0.5,
                 path: "@Url.Content("~/Content/sound/sounds/")",
                 preload: true
+            });
+        }
+
+        function getMensajes()
+        {
+            $.ajax({
+                url: '@Url.Action("GetMensajeJsonResult", "Config")',
+                type: 'post',
+                data: { sistema: "@ViewContext.RouteData.Values["sistema"]",  csId: @ViewBag.csId },
+                dataType: 'json',
+                success: function (data) {
+                    console.dir(data);
+                    if(data.length>0){
+                        //$(".marquee").remove();
+                        for(i=0;i<data.length;i++){
+                            $(".marquee").append("<span>" + data[i].mensaje + " | </span>");
+                        }
+                    }
+                },
+                error: function(error){
+
+                }
             });
         }
 
