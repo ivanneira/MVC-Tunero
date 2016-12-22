@@ -68,7 +68,7 @@ namespace MVC_Turnero.Controllers
         public JsonResult GetProfesionalesJsonResult(string sistema, int? csId) {
 
 
-            var result = "sadasd";
+            var result = "";
 
 
             SqlConnection cx = null;
@@ -257,6 +257,85 @@ namespace MVC_Turnero.Controllers
             }
 
             return Json(result);
+        }
+
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult SaveMesajesJsonResult(string sistema, int? csId, string desde, string hasta, string mensaje)
+        {
+
+            var result = "false";
+            SqlConnection cx = null;
+            string consulta = "";
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "insert into catTurneroMensaje (id_catTurnero, mensaje, fechahora_desde, fechahora_hasta) values " +
+                           "('" + csId + "', '" + mensaje + "','" + desde + "','" + hasta + "')";
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cx.Open();
+                da.InsertCommand = new SqlCommand(consulta, cx);
+                da.InsertCommand.ExecuteNonQuery();
+                result = "true";
+            }
+            catch (Exception err)
+            {
+                result = err.Message;
+                return Json("false");
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult GetMensajeJsonResult(string sistema, int? csId)
+        {
+
+            var result = "";
+
+            SqlConnection cx = null;
+
+            string consulta = "";
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "select id,mensaje, fechahora_desde, fechahora_hasta from catTurneroMensaje where id_catTurnero =  " + csId;
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
+            da.SelectCommand.Parameters.AddWithValue("@column", csId);
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                da.Fill(dt);
+            }
+            catch (Exception err)
+            {
+                return Json(err.Message);
+            }
+            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+            return Json(rows);
+
         }
 
     }
