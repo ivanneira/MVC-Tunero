@@ -338,5 +338,69 @@ namespace MVC_Turnero.Controllers
 
         }
 
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DelMensajesJsonResult(string sistema, int? csId, int idMensaje)
+        {
+
+            var result = "";
+            SqlConnection cx = null;
+            string consulta = "";
+
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "delete from catTurneroMensaje where id =  " + idMensaje + " and  id_catTurnero =" + csId ;
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cx.Open();
+                da.InsertCommand = new SqlCommand(consulta, cx);
+                da.InsertCommand.ExecuteNonQuery();
+                result = "true";
+            }
+            catch (Exception err)
+            {
+                result = err.Message;
+                return Json(result);
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult EditMensajeJsonResult(string sistema, int? csId, int idMensaje, string mensaje)
+        {
+
+            var result = "";
+            SqlConnection cx = null;
+            string consulta = "";
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "update catTurneroMensaje set mensaje ='" + mensaje + "' where id=" + idMensaje + " and id_catTurnero=" + csId ;
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cx.Open();
+                da.InsertCommand = new SqlCommand(consulta, cx);
+                da.InsertCommand.ExecuteNonQuery();
+                result = "true";
+            }
+            catch (Exception err)
+            {
+                result = err.Message;
+                return Json(result);
+            }
+
+            return Json(result);
+        }
     }
 }
