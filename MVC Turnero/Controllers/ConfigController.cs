@@ -261,7 +261,7 @@ namespace MVC_Turnero.Controllers
 
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SaveMesajesJsonResult(string sistema, int? csId, string desde, string hasta, string mensaje)
+        public JsonResult SaveMesajesJsonResult(string sistema, int? csId, string mensaje)
         {
 
             var result = "false";
@@ -271,8 +271,8 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "insert into catTurneroMensaje (id_catTurnero, mensaje, fechahora_desde, fechahora_hasta) values " +
-                           "('" + csId + "', '" + mensaje + "','" + desde + "','" + hasta + "')";
+                consulta = "insert into catTurneroMensaje (id_catTurnero, mensaje) values " +
+                           "('" + csId + "', '" + mensaje + "')";
             }
 
             SqlDataAdapter da = new SqlDataAdapter();
@@ -306,7 +306,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "select id,mensaje, fechahora_desde, fechahora_hasta from catTurneroMensaje where id_catTurnero =  " + csId;
+                consulta = "select id,mensaje from catTurneroMensaje where id_catTurnero =  " + csId;
             }
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
