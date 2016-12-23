@@ -342,11 +342,9 @@ namespace MVC_Turnero.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult DelMensajesJsonResult(string sistema, int? csId, int idMensaje)
         {
-
             var result = "";
             SqlConnection cx = null;
             string consulta = "";
-
 
             if (sistema.ToLower() == "mho")
             {
@@ -375,7 +373,6 @@ namespace MVC_Turnero.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult EditMensajeJsonResult(string sistema, int? csId, int idMensaje, string mensaje)
         {
-
             var result = "";
             SqlConnection cx = null;
             string consulta = "";
