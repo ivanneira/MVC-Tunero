@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Configuración";
 }
-<h3> Configuración de consultorios <small>Hospital Guillermo Rawson</small></h3>
+<h3> Configuración de consultorios</h3>
 <br /><br />
 
 <button class="btn btn-primary" id="agregar">Agregar Consultorio </button>
@@ -448,6 +448,8 @@
             $('#modalMensajes').modal({ show: true,backdrop: 'static', keyboard: false });
         });
 
+        var idMensaje;
+
 
         $.ajax({
             type: "POST",
@@ -485,6 +487,8 @@
 
                             var rowData = table.row(this).data();
 
+                            idMensaje = rowData.id;
+
                             $("#modalMensajestitulo").text("Editar mensaje");
 
                             //console.dir(rowData)
@@ -520,6 +524,7 @@
         });
         //fin ajax
 
+        //abre el boton de confirmar borrar mensaje
         $("#mdeleteButton")
             .click(function() {
 
@@ -527,9 +532,11 @@
                 $("#mconfirmDelete").show();
             });
 
+        //guarda el mensaje
         $("#msaveButton")
             .click(function() {
 
+                //en caso de agregar
                 if (mtipo == "agregar") {
 
                     $.ajax({
@@ -553,11 +560,57 @@
                     });
 
 
-
+                //en caso de editar
                 }else {
+
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            sistema: "@ViewContext.RouteData.Values["sistema"]",
+                            csId: @ViewContext.RouteData.Values["csId"],
+                            mensaje: $("#textoMensaje").val(),
+                            idMensaje: idMensaje
+                        },
+                            url: "@Url.Action("EditMensajeJsonResult", "Config")",
+                        success: function() {
+                            alert("Datos guardados correctamente");
+                            location.reload();
+                        },
+                        error: function(e) {
+                            event.stopPropagation();
+                            alert("error al acceder al servidor");
+
+                        }
+
+                    });
 
                 }
             });
+
+        //borrar mensaje
+        $("#mconfirmDelete").click(function() {
+            
+            $.ajax({
+                type: "POST",
+                data: {
+                    sistema: "@ViewContext.RouteData.Values["sistema"]",
+                    csId: @ViewContext.RouteData.Values["csId"],
+                    idMensaje: idMensaje
+                },
+                    url: "@Url.Action("DelMensajesJsonResult", "Config")",
+                    success: function() {
+                        alert("Registro borrado correctamente");
+                        location.reload();
+                    },
+                    error: function(e) {
+                        event.stopPropagation();
+                        alert("error al acceder al servidor");
+
+                    }
+
+            });
+        });
+
 
     });
 
