@@ -29,7 +29,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "select ctc.consultorio as ConsultorioNombre, ctc.numero as identificador, ctc.activo as Activo, (p.Apellido + ', ' + p.Nombre) as Profesional, p.ProfesionalID  from catTurneroConsultorio ctc " +
+                consulta = "select ctc.id,ctc.consultorio as ConsultorioNombre, ctc.numero as identificador, ctc.activo as Activo, (p.Apellido + ', ' + p.Nombre) as Profesional, p.ProfesionalID  from catTurneroConsultorio ctc " +
                            " inner join catTurnero ct on ct.csId = ctc.id_catTurnero " +
                            " left join Profesional p on p.ProfesionalID = ctc.PerConId " +
                            " where ct.csId = @column ";
@@ -190,7 +190,7 @@ namespace MVC_Turnero.Controllers
 
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult EditProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero)
+        public JsonResult EditProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero, int id)
         {
 
             var result = "";
@@ -205,7 +205,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "update catTurneroConsultorio set consultorio ='" + ConsultorioNombre + "', numero = '" + ConsultorioNumero + "', activo = '" + EstadoConsultorio + "', PerConId='" + ProfesionalID + "' where perConId='" + ProfesionalID + "'";
+                consulta = "update catTurneroConsultorio set consultorio ='" + ConsultorioNombre + "', numero = '" + ConsultorioNumero + "', activo = '" + EstadoConsultorio + "', PerConId='" + ProfesionalID + "' where id='" + id + "'";
             }
 
             SqlDataAdapter da = new SqlDataAdapter();
@@ -228,7 +228,7 @@ namespace MVC_Turnero.Controllers
 
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult DelProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero)
+        public JsonResult DelProfesionalesJsonResult(string sistema, int? csId, int EstadoConsultorio, string ConsultorioNombre, int ProfesionalID, int ConsultorioNumero,int id)
         {
 
             var result = "";
@@ -239,7 +239,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "delete from catTurneroConsultorio where activo = " + EstadoConsultorio + " and consultorio='" + ConsultorioNombre + "' and PerConId=" + ProfesionalID + " and numero = "+ ConsultorioNumero + " and id_catTurnero=" + csId;
+                consulta = "delete from catTurneroConsultorio where id = " + id;
             }
 
             SqlDataAdapter da = new SqlDataAdapter();

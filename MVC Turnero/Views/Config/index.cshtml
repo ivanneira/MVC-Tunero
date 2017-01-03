@@ -35,7 +35,7 @@
 
                     <p>Nombre de Consultorio</p>
                     <input id="consultorio" type="text" class="form-control inputs" placeholder="nombre de consultorio" aria-describedby="basic-addon2">
-
+                    <input id="id" type="hidden" />
                 </div>
                 <br />
 
@@ -197,7 +197,8 @@
                             EstadoConsultorio: $("#estado").val(),
                             ConsultorioNombre: $("#consultorio").val(),
                             ProfesionalID: $("#profSelector").val(),
-                            ConsultorioNumero: $("#identificador").val()
+                            ConsultorioNumero: $("#identificador").val(),
+                            id: $("#id").val()
                         },
                             url: "@Url.Action("EditProfesionalesJsonResult", "Config")",
                         success: function(data) {
@@ -253,6 +254,7 @@
                 $("#titulo").text("Agregar consultorio");
 
                 //vacio los campos
+                $("#id").val("");
                 $("#consultorio").val("");
                 $("#identificador").val("");
                 $("#consultorio").removeClass("btn-danger");
@@ -303,7 +305,7 @@
             //dataType: dataType,
             success: function(datax) {
 
-                //console.log(datax);
+                //console.dir(datax);
 
                 var table = $('#example')
                     .DataTable({
@@ -315,6 +317,7 @@
                         //configuración de lenguaje
                         language: languageConfig,
                         columns: [
+                            { title: "ID", data: "id", visible: false},
                             { title: "Activo", data: "Activo" },
                             { title: "Consultorio", data: "ConsultorioNombre" },
                             { title: "Profesional", data: "Profesional" },
@@ -342,6 +345,7 @@
                             } else {
                                 $("#estado").selectpicker('val', 0);
                             }
+                            $("#id").val(data.id);
                             $("#consultorio").val(data.ConsultorioNombre);
                             $("#identificador").val(data.identificador);
                             $("#consultorio").removeClass("btn-danger");
@@ -402,10 +406,12 @@
                     data: {
                         sistema: "@ViewContext.RouteData.Values["sistema"]",
                         csId: @ViewContext.RouteData.Values["csId"],
+                        id : $("#id").val(),
                         EstadoConsultorio: $("#estado").val(),
                         ConsultorioNombre: $("#consultorio").val(),
                         ProfesionalID: $("#profSelector").val(),
-                        ConsultorioNumero: $("#identificador").val()
+                        ConsultorioNumero: $("#identificador").val(),
+                        
                     },
                     url: "@Url.Action("DelProfesionalesJsonResult", "Config")",
                     success: function(data) {
@@ -459,7 +465,7 @@
                 csId: @ViewContext.RouteData.Values["csId"]
                 },
             success: function(data) {
-                console.dir(data);
+                //console.dir(data);
 
                 var table = $('#mensajes')
                    .DataTable({

@@ -106,7 +106,6 @@
 
     <div class="row" >
         <footer class="footer headerColor">
-
             <div class="col-md-12" style="width:100% !important; margin-left:auto; margin-right:auto; float:inherit; background-color: #fff">
                 <div class="row" style="background-color: #dce5ee">
                     <div class="col-md-4">
@@ -141,13 +140,10 @@
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
-            
                     <marquee class="marquee">
-                        
                     </marquee>
                     <div class="separador"></div>
                     <img src="~/img/sjlogo.png"> <b>M</b>inisterio de <b>S</b>alud <b>P</b>ública / <b>A</b>rea <b>I</b>nformática - <b>D</b>esarrollo de <b>S</b>istemas - <b>C</b>opyright © 2016 <b>T</b>odos los derechos reservados - <b>G</b>obierno de la <b>p</b>rovincia de <b>S</b>an <b>J</b>uan.
@@ -156,9 +152,6 @@
 
 
 <script type="text/javascript">
-    //meSpeak.speak("Configuration and voice definition loaded.");
-    meSpeak.loadConfig("@Url.Content("~/Scripts/mespeak_config.json")");
-    meSpeak.loadVoice("@Url.Content("~/Scripts/voices/es-la.json")");
     var x = 0;
 </script>
 
@@ -169,9 +162,8 @@
             getMensajes();
             //getClima();
             sound();
-            ion.sound.play("Bell-tone");
-            //meSpeak.speak("MORA GOMEZ, AIDA LILIANA");
-            //meSpeak.speak("Llamando al paciente: Delgado, Rolando: por consultorio 1","{ 'amplitude: 90', 'wordgap: 10', 'pitch: 190', 'speed: 100'}");
+            
+
         });
 
         /*CARGA INICIAL DE DATOS DEL CLIMA*/
@@ -200,50 +192,53 @@
                     data: { sistema: "@ViewContext.RouteData.Values["sistema"]",  csId: @ViewBag.csId },
                     dataType: 'json',
                     success: function (data) {
-                        //console.dir(data);
-                        var paciente = [];
-                        var i=0;
-                        if(typeof(data[0].FechaHora) != 'undefined')
+
+                        if(data.length > 0)
                         {
-                            $("#hora").text(data[0].FechaHora);
-                        }
-
-                        $(".nombrePacientes").remove();
-                        for (var index in data) {
-
-                            $('#profesional_table_'+data[index]["consultorioId"]).html('' + data[index]["profesional"] + '');
-
-                            if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
+    
+                            var paciente = [];
+                            var i=0;
+                            if(typeof(data[0].FechaHora) != 'undefined')
                             {
-                               
-                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
+                                $("#hora").text(data[0].FechaHora);
                             }
-                            else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
-                            {
-                                 if(x==0)
+
+                            $(".nombrePacientes").remove();
+                            for (var index in data) {
+
+
+                                $('#profesional_table_'+data[index]["consultorioId"]).html('' + data[index]["profesional"] + '');
+                                
+                                if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
                                 {
-                                    console.log(data[index]['paciente']);
-                                    //meSpeak.speak("Llamando al paciente: "+  data[index]['paciente'] + ": por consultorio 1","{ 'amplitude: 100', 'wordgap: 10', 'pitch: 190', 'speed: 100'}");
-                                    x=1;
-
+                                    ion.sound.play("Bell-tone");
+                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
                                 }
-                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
-                            }
-                            else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
-                            {
-                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
-                            }
-                            else if(data[index]['estado'] == 0 && data[index]['urgencia'] == 1) // En espera Urgencia
-                            {
-                                $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia'>"+ data[index]['paciente'] + "</td></tr>");
+                                else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
+                                {
+                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
+                                }
+                                else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
+                                {
+
+                                    ion.sound.play("Bell-tone");
+                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
+                                }
+                                else if(data[index]['estado'] == 0 && data[index]['urgencia'] == 1) // En espera Urgencia
+                                {
+                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia'>"+ data[index]['paciente'] + "</td></tr>");
+                                }
+
                             }
 
+                            //ion.sound.play("Email-notification-sound");
                         }
-                        //ion.sound.play("Email-notification-sound");
-                        
+                        else
+                        {
+                            refresh();
+                        }
                     },
                     error: function () {
-                        //$('#consultorio_table_1').html("Error");
                         console.log("error");
                     }
                 });
@@ -282,7 +277,7 @@
                 },
 
                 error: function(error) {
-                    //console.log(error);
+                    console.log(error);
                 }
             });
 
@@ -320,7 +315,7 @@
                 data: { sistema: "@ViewContext.RouteData.Values["sistema"]",  csId: @ViewBag.csId },
                 dataType: 'json',
                 success: function (data) {
-                    console.dir(data);
+                    //console.dir(data);
                     if(data.length>0){
                         //$(".marquee").remove();
                         for(i=0;i<data.length;i++){
@@ -334,5 +329,10 @@
             });
         }
 
+
+        function refresh()
+        {
+            setTimeout(function () {  window.location.reload() }, 5000);
+        }
         
     </script>

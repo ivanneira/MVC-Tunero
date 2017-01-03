@@ -40,7 +40,7 @@ namespace MVC_Turnero.Controllers
                            "     left join Profesional cpe on cpe.ProfesionalID = cta.PerConId "+
                            " where cta.csId = @column and cast(cta.fecha as date) = cast(GETDATE() as date) and id_catTurneroConsultorio = 1 order by estado desc, urgencia desc, id asc";
                 */
-                consulta = "select (cpa.Apellido + ', ' + cpa.Nombre) as paciente, (cpe.Apellido + ', '+ cpe.Nombre) as profesional, cta.estado,cta.urgencia,cta.prioridad , cta.id_catTurneroConsultorio as consultorioId  " +
+                consulta = "select cta.pacId, (cpa.Apellido + ', ' + cpa.Nombre) as paciente, (cpe.Apellido + ', '+ cpe.Nombre) as profesional, cta.estado,cta.urgencia,cta.prioridad , cta.id_catTurneroConsultorio as consultorioId  " +
                            " from catTurneroAtencion cta " +
                            "     left join Paciente cpa on cpa.PacienteID = cta.pacId " +
                            "     left join Profesional cpe on cpe.ProfesionalID = cta.PerConId " +
@@ -64,6 +64,7 @@ namespace MVC_Turnero.Controllers
                 {
                     var x = new datosJson
                     {
+                        pacId = row["pacId"].ToString(),
                         consultorioId = row["consultorioId"].ToString(),
                         paciente = row["paciente"].ToString(),
                         profesional = row["profesional"].ToString(),
@@ -94,6 +95,7 @@ namespace MVC_Turnero.Controllers
             public string estado { get; set; }
             public string consultorioId { get; set; }
             public string FechaHora { get; set; }
+            public string pacId { get; set; }
         }
 
 
