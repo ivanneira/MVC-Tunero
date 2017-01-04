@@ -71,7 +71,7 @@
                 "<div class='small-box bg-" + cssClass + "'> " +
                     "<div class='inner'> " +
                         "<h3>"+ ViewBag.ConsultorioNombre[i] + "</h3>" +
-                        "<p id='profesional_table_" + (ViewBag.ConsultorioId[i]) + "'>No disponible</p> " +
+                        "<b><p id='profesional_table_" + (ViewBag.ConsultorioId[i]) + "'>No disponible</p></b> " +
                     "</div> " +
                     "<div class='icon'> " +
                         "<i class='fa fa-user-md' style='vertical-align:text-top'></i> " +
@@ -150,7 +150,7 @@
 
 <script type="text/javascript">
     var x = 0;
-    var data2 = [];
+    var data2 = new Array(2);
 </script>
 
     <script type="text/javascript">
@@ -161,11 +161,14 @@
                     for (var i = 0; i < ViewBag.cantSalas; i++)
                     {
                         <Text>
-                        getConsultorioData(@ViewBag.ConsultorioId[i]);
-                        //console.dir(@ViewBag.ConsultorioId[i])
+                            getConsultorioData(@ViewBag.ConsultorioId[i]);
+                            data2[@ViewBag.ConsultorioId[i]]=new Array(2);
                         </text>
                     }
+
+               
                 }
+            console.dir(data2);
             getMensajes();
             //getClima();
             sound();
@@ -223,20 +226,21 @@
 
                                 if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
                                 {
-
-                                    if(data2.indexOf(data[index].pacId) == -1)
+                                    if(typeof(data2[consultorioId]) != "undefined")
                                     {
-                                        ding(2);
-                                        data2.push(data[index].pacId);
+                                        if(data2[consultorioId].indexOf(data[index].pacId) == -1)
+                                        {
+                                            ding(2);
+                                            data2[consultorioId].push(data[index].pacId);
+                                        }
                                     }
-                                    
                                     $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
                                 }
                                 else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
                                 {
                                     if(data2.indexOf(data[index].pacId) != -1)
                                     {
-                                        data2.pop(data2.indexOf(data[index].pacId));
+                                        data2[consultorioId].pop(data2.indexOf(data[index].pacId));
                                         //console.dir(data2);
                                     }
                                     $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
@@ -244,10 +248,10 @@
                                 else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
                                 {
 
-                                    if(data2.indexOf(data[index].pacId) == -1)
+                                    if(data2[consultorioId][index].indexOf(data[index].pacId) == -1)
                                     {
                                         ding(3);
-                                        data2.push(data[index].pacId);
+                                        data2[consultorioId][index].push(data[index].pacId);
                                     }
 
                                     $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
@@ -256,7 +260,7 @@
                                 {
                                     if(data2.indexOf(data[index].pacId) != -1)
                                     {
-                                        data2.pop(data2.indexOf(data[index].pacId));
+                                        data2[consultorioId].pop(data2.indexOf(data[index].pacId));
                                         //console.dir(data2);
                                     }
 
@@ -268,9 +272,9 @@
                         }
                         else
                         {
-                            data2 = [];
-                            refresh();
-                            
+                            data2[consultorioId] = [];
+                            refresh(consultorioId);
+
                         }
                     },
                     error: function () {
@@ -361,15 +365,15 @@
         }
 
 
-        function refresh()
+        function refresh(consultorioId)
         {
-            setTimeout(function () {  window.location.reload() }, 30000);
+            $(".nombrePacientes"+consultorioId).remove();
         }
 
         function ding(cant)
         {
 
-                ion.sound.play("Bell-tone",{loop: cant}); 
+                ion.sound.play("Bell-tone",{loop: cant});
         }
 
     </script>
