@@ -63,6 +63,50 @@ namespace MVC_Turnero.Controllers
             return Json(rows);
         }
 
+        public JsonResult GetConfigConsultorioJsonResultId(string sistema, int? csId, string identificador)
+        {
+
+            SqlConnection cx = null;
+
+            string consulta = "";
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "select ctc.id,ctc.consultorio as ConsultorioNombre, ctc.numero as identificador, ctc.activo as Activo, (p.Apellido + ', ' + p.Nombre) as Profesional, p.ProfesionalID  from catTurneroConsultorio ctc " +
+                           " inner join catTurnero ct on ct.csId = ctc.id_catTurnero " +
+                           " left join Profesional p on p.ProfesionalID = ctc.PerConId " +
+                           " where ct.csId = @column and ctc.numero = @column2 ";
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
+            da.SelectCommand.Parameters.AddWithValue("@column", csId);
+            da.SelectCommand.Parameters.AddWithValue("@column2", identificador);
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                da.Fill(dt);
+            }
+            catch (Exception err)
+            {
+                return Json(err.Message);
+            }
+            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+            return Json(rows);
+        }
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetProfesionalesJsonResult(string sistema, int? csId) {
@@ -206,6 +250,39 @@ namespace MVC_Turnero.Controllers
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
                 consulta = "update catTurneroConsultorio set consultorio ='" + ConsultorioNombre + "', numero = '" + ConsultorioNumero + "', activo = '" + EstadoConsultorio + "', PerConId='" + ProfesionalID + "' where id='" + id + "'";
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cx.Open();
+                da.InsertCommand = new SqlCommand(consulta, cx);
+                da.InsertCommand.ExecuteNonQuery();
+                result = "true";
+            }
+            catch (Exception err)
+            {
+                result = err.Message;
+                return Json(result);
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult EditProfesionalesJsonResultId(string sistema, int? csId,int ProfesionalID,  int id)
+        {
+
+            var result = "";
+            SqlConnection cx = null;
+            string consulta = "";
+
+
+            if (sistema.ToLower() == "mho")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "update catTurneroConsultorio set PerConId='" + ProfesionalID + "' where numero='" + id + "'";
             }
 
             SqlDataAdapter da = new SqlDataAdapter();

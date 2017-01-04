@@ -15,7 +15,7 @@ namespace MVC_Turnero.Controllers
         // GET: Consultorio
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult getConsultorioData(string sistema,int? csId)
+        public ActionResult getConsultorioData(string sistema,int? csId, int? consultorioID)
         {
             SqlConnection cx = null;
             string consulta = "";
@@ -44,13 +44,15 @@ namespace MVC_Turnero.Controllers
                            " from catTurneroAtencion cta " +
                            "     left join Paciente cpa on cpa.PacienteID = cta.pacId " +
                            "     left join Profesional cpe on cpe.ProfesionalID = cta.PerConId " +
-                           " where cta.csId = @column  order by estado desc, urgencia desc, id asc";
+                           "     inner join catturneroconsultorio ctc on ctc.PerConId = cta.PerConId " +
+                           " where cta.csId = @column and ctc.id = @column2  order by cta.estado desc, cta.urgencia desc, cta.id asc";
             }
 
 
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
             da.SelectCommand.Parameters.AddWithValue("@column", csId);
+            da.SelectCommand.Parameters.AddWithValue("@column2", consultorioID);
 
             DataTable dt = new DataTable();
 

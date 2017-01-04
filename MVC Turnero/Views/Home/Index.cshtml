@@ -97,12 +97,9 @@
 
         }
 
-
-
     </div>
        
     <hr />
-
 
     <div class="row" >
         <footer class="footer headerColor">
@@ -153,16 +150,26 @@
 
 <script type="text/javascript">
     var x = 0;
+    var data2 = [];
 </script>
 
     <script type="text/javascript">
 
         $(document).ready(function () {
-            getConsultorioData();
+
+            @{
+                    for (var i = 0; i < ViewBag.cantSalas; i++)
+                    {
+                        <Text>
+                        getConsultorioData(@ViewBag.ConsultorioId[i]);
+                        //console.dir(@ViewBag.ConsultorioId[i])
+                        </text>
+                    }
+                }
             getMensajes();
             //getClima();
             sound();
-            
+
 
         });
 
@@ -183,19 +190,25 @@
         }
 
         /*FUNCION QUE OBTIENE DATOS DE CONSULTORIO*/
-        function getConsultorioData()
+        function getConsultorioData(consultorioId)
         {
 
                 $.ajax({
                     url: '@Url.Action("getConsultorioData", "Consultorio")',
                     type: 'post',
-                    data: { sistema: "@ViewContext.RouteData.Values["sistema"]",  csId: @ViewBag.csId },
+                    data: {
+                            sistema: "@ViewContext.RouteData.Values["sistema"]",
+                            csId: @ViewBag.csId,
+                            consultorioID: consultorioId
+                         },
                     dataType: 'json',
                     success: function (data) {
 
                         if(data.length > 0)
                         {
-    
+                            //console.dir(data);
+
+
                             var paciente = [];
                             var i=0;
                             if(typeof(data[0].FechaHora) != 'undefined')
@@ -203,39 +216,61 @@
                                 $("#hora").text(data[0].FechaHora);
                             }
 
-                            $(".nombrePacientes").remove();
+                            $(".nombrePacientes"+consultorioId).remove();
                             for (var index in data) {
 
+                                $('#profesional_table_'+consultorioId).html('' + data[index]["profesional"] + '');
 
-                                $('#profesional_table_'+data[index]["consultorioId"]).html('' + data[index]["profesional"] + '');
-                                
                                 if(data[index]['estado'] == 1 && data[index]['urgencia'] != 1) //Atencion
                                 {
-                                    ion.sound.play("Bell-tone");
-                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
+
+                                    if(data2.indexOf(data[index].pacId) == -1)
+                                    {
+                                        ding(2);
+                                        data2.push(data[index].pacId);
+                                    }
+                                    
+                                    $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"'><td class='llamado pulse'>"+ data[index]['paciente'] + "</td></tr>");
                                 }
                                 else if(data[index]['estado'] == 0 && data[index]['urgencia'] != 1) //En espera
                                 {
-                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
+                                    if(data2.indexOf(data[index].pacId) != -1)
+                                    {
+                                        data2.pop(data2.indexOf(data[index].pacId));
+                                        //console.dir(data2);
+                                    }
+                                    $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"' ><td class='blanco '>"+ data[index]['paciente'] + "</td></tr>");
                                 }
                                 else if(data[index]['estado'] == 1 && data[index]['urgencia'] == 1) // Atencion de urgencia
                                 {
 
-                                    ion.sound.play("Bell-tone");
-                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
+                                    if(data2.indexOf(data[index].pacId) == -1)
+                                    {
+                                        ding(3);
+                                        data2.push(data[index].pacId);
+                                    }
+
+                                    $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"' ><td class='urgencia pulse '>"+ data[index]['paciente'] + "</td></tr>");
                                 }
                                 else if(data[index]['estado'] == 0 && data[index]['urgencia'] == 1) // En espera Urgencia
                                 {
-                                    $("#consultorio_table_"+data[index]['consultorioId']).append("<tr class='nombrePacientes' ><td class='urgencia'>"+ data[index]['paciente'] + "</td></tr>");
+                                    if(data2.indexOf(data[index].pacId) != -1)
+                                    {
+                                        data2.pop(data2.indexOf(data[index].pacId));
+                                        //console.dir(data2);
+                                    }
+
+                                    $("#consultorio_table_"+consultorioId).append("<tr class='nombrePacientes"+consultorioId+"' ><td class='urgencia'>"+ data[index]['paciente'] + "</td></tr>");
                                 }
 
                             }
 
-                            //ion.sound.play("Email-notification-sound");
                         }
                         else
                         {
+                            data2 = [];
                             refresh();
+                            
                         }
                     },
                     error: function () {
@@ -243,7 +278,7 @@
                     }
                 });
 
-            setTimeout(function () { getConsultorioData() }, 5000); //LOS DATOS DE CONSULTORIOS DE ACTUALIZARAN CADA 5 SEGUNDOS
+            setTimeout(function () { getConsultorioData(consultorioId) }, 5000); //LOS DATOS DE CONSULTORIOS DE ACTUALIZARAN CADA 5 SEGUNDOS
         }
 
 
@@ -293,17 +328,13 @@
                     },
                     {
                         name: "Email-notification-sound",
-                        volume: 0.2
                     },
-                    {
-                        name: "alert_sound",
-                        volume: 0.3,
-                        preload: false
-                    }
+
                 ],
-                volume: 0.5,
+                volume: 0.9,
                 path: "@Url.Content("~/Content/sound/sounds/")",
-                preload: true
+                preload: true,
+                multiplay: true,
             });
         }
 
@@ -332,7 +363,13 @@
 
         function refresh()
         {
-            setTimeout(function () {  window.location.reload() }, 5000);
+            setTimeout(function () {  window.location.reload() }, 30000);
         }
-        
+
+        function ding(cant)
+        {
+
+                ion.sound.play("Bell-tone",{loop: cant}); 
+        }
+
     </script>

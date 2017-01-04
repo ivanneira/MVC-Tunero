@@ -61,7 +61,17 @@ namespace MVC_Turnero.Controllers
                 return View("~/Views/Config/index.cshtml");
             }
 
-                if (consultorioId == "")
+            if (consultorioId.Length > 1)
+            {
+                if (consultorioId.Substring(0, 2) == "c=" )
+                {
+                    var id = consultorioId.Substring(2, consultorioId.Length - 2);
+                    
+                    ViewBag.idConsultorio = (id == "") ? "0" : id;
+                    return View("~/Views/Config/index2.cshtml");
+                }
+            }
+            if (consultorioId == "")
             {
                 consulta = "select id,consultorio from catTurneroConsultorio where id_catTurnero = @column and activo = 1";
                 da = new SqlDataAdapter(consulta, cx);

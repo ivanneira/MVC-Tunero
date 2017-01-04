@@ -337,6 +337,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Consultorio\View.cshtml" />
     <Content Include="Views\Config\index.cshtml" />
+    <Content Include="Views\Config\index2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

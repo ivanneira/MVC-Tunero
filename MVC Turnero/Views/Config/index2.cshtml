@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Configuración por profesional";
+}
+<h3> Configuración de consultorios</h3>
+
+<br /><br />
+
+
+<label class="textlabel">Nombre de Consultorio: </label><label style="font-size:14px;" class="label label-default" id="ConsultorioNombre">No disponible</label>
+<br />
+
+<label class="textlabel">Profesional asignado:  </label> <select id="profSelector" data-live-search="true" class="selectpicker" data-style="btn-default"></select>
+<br />
+<button class="btn btn-success" id="btnGuardar">Guardar cambios</button>
+<hr/>
+
+@*datatable con consultorios*@
+
+
+
+
+
+
+
+
+
+<script>
+
+    var id = @ViewBag.idConsultorio;
+    var profesionales;
+
+
+    $("#btnGuardar").click(function () {
+        $.ajax({
+            type: "POST",
+            data:
+                {
+                            sistema: "@ViewContext.RouteData.Values["sistema"]",
+                            csId: @ViewContext.RouteData.Values["csId"],
+                            ProfesionalID: $("#profSelector").val(),
+                            id: id
+                },
+
+            url: "@Url.Action("EditProfesionalesJsonResultId", "Config")",
+            success: function(data)
+            {
+                console.dir(data);
+                if(data =="true")
+                {
+                    alert("Modificado correctamente.");
+                }
+            },
+            error: function(e)
+            {
+                event.stopPropagation();
+                alert("error al acceder al servidor");
+            }
+
+        });
+
+    });
+
+
+    $(document).ready(function(){
+        //carga una sola vez todos los profesionales
+        $.post("@Url.Action("GetProfesionalesJsonResult", "Config")", {sistema: "@ViewContext.RouteData.Values["sistema"]",csId: @ViewContext.RouteData.Values["csId"]})
+            .done(function(result) {
+                profesionales = result;
+                cargarCombo();
+            });
+
+
+
+
+            if(id==""){
+                $("#ConsultorioNombre").text("Ingrese la url correctamente");
+                $("#profSelector").remove();
+                $("#btnGuardar").remove();
+                $(".textlabel").remove();
+            }else{
+                TraerDatos(id);
+            }
+
+
+
+    });
+
+
+
+    function TraerDatos(id)
+    {
+
+        $.ajax({
+            type: "POST",
+            data:
+                {
+                sistema: "@ViewContext.RouteData.Values["sistema"]",
+                csId: @ViewContext.RouteData.Values["csId"],
+                identificador: (id == "") ? "" : id
+                },
+            url: "@Url.Action("GetConfigConsultorioJsonResultId", "Config")",
+            success: function(data)
+            {
+                console.dir(data);
+                $("#ConsultorioNombre").text(data[0].ConsultorioNombre);
+                $("#profSelector").selectpicker('val', data[0].ProfesionalID);
+            },
+            error: function(e)
+            {
+                event.stopPropagation();
+                alert("error al acceder al servidor");
+            }
+
+        });
+    }
+
+    function cargarCombo() {
+
+
+            for (var index in profesionales) {
+
+                $("#profSelector")
+                    .append("<option value=" +
+                        profesionales[index].ProfesionalID +
+                        "> " +
+                        profesionales[index].Profesional +
+                        " </option>");
+            }
+        $('#profSelector').selectpicker('refresh');
+
+    }
+</script>
