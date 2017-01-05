@@ -122,8 +122,9 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
-                consulta = "select p.ProfesionalID, (p.Apellido + ', ' + p.Nombre) as Profesional from profesional p "+
-                           " order by p.Apellido, p.Nombre asc";
+                consulta = "select p.ProfesionalID,  (p.Apellido + ', ' + p.Nombre) as Profesional from profesional p " +
+                           " inner join ProfesionalEspecEmpr pe on p.ProfesionalID = pe.ProfesionalID and pe.EmpresaID = "+ csId +
+                           " group by p.ProfesionalID, p.Apellido, p.Nombre order by p.Apellido, p.Nombre asc";
             }
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
