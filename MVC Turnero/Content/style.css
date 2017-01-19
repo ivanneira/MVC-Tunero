@@ -1,3 +1,4 @@
+/*
     @-webkit-keyframes pulse {
       from {
         -webkit-transform: scale(1.0);
@@ -12,6 +13,9 @@
         opacity: 0.75;
       }
     }
+
+*/
+
 
     .borde{
 
@@ -29,11 +33,37 @@
         color: #fff;
     }
 
+
     .blanco {
         background-color: #fff; 
         color: #555;
+        font-weight:bold;
     }
     
+
+    .llamando1 {
+    
+    background-color:green !important;
+    
+}
+    .llamando2 {
+    
+    background-color:white !important;
+    color: #555;
+    }
+
+
+    .llamando_urgencia1 {
+    
+    background-color:red !important;
+    
+}
+    .llamando_urgencia2 {
+    
+    background-color:white !important;
+    color: #555;
+    }
+
     .pulse { 
       -webkit-animation-name: pulse; 
       -webkit-animation-duration: 1s; 
@@ -53,14 +83,14 @@
 
 
     .table-bordered td {
-        font-size:2vw;
+        font-size:3vw;
     }
 
     .headerColor {
                 background-color: #008bc4;
     }
     .csTitulo h2 {
-        font-family: 'Raleway',sans-serif;
+        font-family: "Raleway",sans-serif;
         font-size:40px;
         text-align:left; 
         margin-top:30px;
@@ -159,17 +189,17 @@
 
 
     .clima span {
-        font-family: 'Raleway',sans-serif;
+        font-family: "Raleway",sans-serif;
     }
     .clima {
-        font-family: 'Raleway',sans-serif;
+        font-family: "Raleway",sans-serif;
         font-size:35px;
         line-height:15px;
         font-weight:bold;
     }
 
      .clima small{
-        font-family: 'Raleway',sans-serif;
+        font-family: "Raleway",sans-serif;
         font-size:15px;
     }
 
@@ -227,19 +257,19 @@
       background: rgba(0, 0, 0, 0.15);
     }
     .small-box h3 {
-      font-size: 28px;
+      font-size: 38px;
       font-weight: bold;
       margin: 0 0 10px 0;
       white-space: nowrap;
       padding: 0;
     }
     .small-box p {
-      font-size: 15px;
+      font-size: 20px;
     }
     .small-box p > small {
       display: block;
       color: #f9f9f9;
-      font-size: 13px;
+      font-size: 18px;
       margin-top: 5px;
     }
     .small-box h3,
@@ -266,14 +296,13 @@
     }
 
     .table>thead>tr>th{
-        font-family: 'Rubik', sans-serif;
-        font-size:1.3vw;
+        /*font-family: "Rubik", sans-serif;*/
+        font-size:30px;
     }
 
-
     .table>tbody>tr>td{
-        font-family: 'Rubik', sans-serif;
-        font-size:1.3vw;
+        font-size:23px;
+        
     }
 
 @media (max-width: 767px) {
@@ -290,7 +319,7 @@
         }
 }
 
-/*agregado por yo*/
+
 .inputs {
     width: 220px;
 }

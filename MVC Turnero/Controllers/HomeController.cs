@@ -15,6 +15,12 @@ namespace MVC_Turnero.Controllers
         [HttpGet]
         public ActionResult Index(string sistema,  int ? csId, string  consultorioId)
         {
+
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);  // HTTP 1.1.
+            Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
+
             string consulta = "";
             SqlDataAdapter da = null;
             SqlConnection cx = null;

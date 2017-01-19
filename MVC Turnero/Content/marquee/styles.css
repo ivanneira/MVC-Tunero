@@ -2,12 +2,12 @@
 .marquee {
     
     background-color:lightpink;
-    font-family: 'Anton', sans-serif;
-
     height: 60px;
     width: 100%;
     line-height:60px;
     color:#222;
-    font-size:35px;
+    font-size:45px;
+    font-weight:bold;
+    
 }
 
