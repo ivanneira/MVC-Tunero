@@ -23,11 +23,12 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "gedoc")
             {
                  cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
-                consulta = "select (cpa.pacApellido + ', ' + cpa.pacNombre) as paciente, (cpe.perApellidoyNombre) as profesional, cta.estado,cta.urgencia,cta.prioridad , cta.id_catTurneroConsultorio as consultorioId" +
+                consulta = "select cta.pacId, (cpa.pacApellido + ', ' + cpa.pacNombre) as paciente, (cpe.perApellidoyNombre) as profesional, cta.estado,cta.urgencia,cta.prioridad , cta.id_catTurneroConsultorio as consultorioId" +
                            " from catTurneroAtencion cta" +
                            "     left   join catPaciente cpa on cpa.pacId = cta.pacId" +
                            "     left   join catPersona cpe on cpe.perId = cta.PerConId" +
-                           " where cta.csId = @column and cast(cta.fecha as date) = cast(GETDATE() as date) order by estado desc, urgencia desc ,id asc";
+                           "     inner join catturneroconsultorio ctc on ctc.PerConId = cta.PerConId " +
+                           " where cta.csId = @column and ctc.id = @column2  order by cta.estado desc, cta.urgencia desc, cta.id asc";
 
             }
             else

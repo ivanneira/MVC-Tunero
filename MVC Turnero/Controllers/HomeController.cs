@@ -27,7 +27,7 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "gedoc")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
-                consulta = "select ct.csId, cs.csNombre, ct.id from catTurnero ct inner join catCentroDeSalud cs on cs.csId = ct.csId  where ct.csId=@column";
+                consulta = "select ct.csId, cs.csNombre  as CsNombre, ct.id from catTurnero ct inner join catCentroDeSalud cs on cs.csId = ct.csId  where ct.csId=@column";
 
             }
             else
@@ -81,14 +81,14 @@ namespace MVC_Turnero.Controllers
             {
                 consulta = "select id,consultorio from catTurneroConsultorio where id_catTurnero = @column and activo = 1";
                 da = new SqlDataAdapter(consulta, cx);
-                da.SelectCommand.Parameters.AddWithValue("@column", catTurneroId);
+                da.SelectCommand.Parameters.AddWithValue("@column", csId);
             }
             else
             {
 
                 string[] j = consultorioId.Split('-');
 
-                consulta = "select  id,consultorio from catTurneroConsultorio where ( id_catTurnero = "+ catTurneroId + " and ( numero = @column";
+                consulta = "select  id,consultorio from catTurneroConsultorio where ( id_catTurnero = "+ csId + " and ( numero = @column";
 
                 for(int i=1;i<j.Length;i++)
                 {

@@ -34,6 +34,16 @@ namespace MVC_Turnero.Controllers
                            " left join Profesional p on p.ProfesionalID = ctc.PerConId " +
                            " where ct.csId = @column ";
             }
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "select ctc.id,ctc.consultorio as ConsultorioNombre, ctc.numero as identificador, ctc.activo as Activo, x.perApellidoyNombre as Profesional, x.perId  as ProfesionalID " +
+                            " from catTurneroConsultorio ctc " +
+                            " inner join catTurnero ct on ct.csId = ctc.id_catTurnero " +
+                            " left join  (select p.perId, p.perApellidoyNombre from catPersona p inner join catProfesion prof on prof.profId = p.profId union " +
+                            " select c.conId, c.conApellidoyNombre from catPersonaContratados c inner join catProfesion prof on prof.profId = c.profId where conMotivoBaja is not null and conMotivoBaja is not null and c.conDNI not in (select perDNI from catPersona)) as x on x.perId = ctc.PerConId " +
+                            " where ct.csId = @column ";
+            }
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
             da.SelectCommand.Parameters.AddWithValue("@column", csId);
@@ -67,7 +77,6 @@ namespace MVC_Turnero.Controllers
         {
 
             SqlConnection cx = null;
-
             string consulta = "";
 
             if (sistema.ToLower() == "mho")
@@ -77,6 +86,17 @@ namespace MVC_Turnero.Controllers
                            " inner join catTurnero ct on ct.csId = ctc.id_catTurnero " +
                            " left join Profesional p on p.ProfesionalID = ctc.PerConId " +
                            " where ct.csId = @column and ctc.numero = @column2 ";
+            }
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+
+                consulta = "select ctc.id,ctc.consultorio as ConsultorioNombre, ctc.numero as identificador, ctc.activo as Activo, x.perApellidoyNombre as Profesional, x.perId  as ProfesionalID " +
+                           " from catTurneroConsultorio ctc " +
+                           " inner join catTurnero ct on ct.csId = ctc.id_catTurnero " +
+                           " left join  (select p.perId, p.perApellidoyNombre from catPersona p inner join catProfesion prof on prof.profId = p.profId union " +
+                           " select c.conId, c.conApellidoyNombre from catPersonaContratados c inner join catProfesion prof on prof.profId = c.profId where conMotivoBaja is not null and conMotivoBaja is not null and c.conDNI not in (select perDNI from catPersona)) as x on x.perId = ctc.PerConId " +
+                           " where ct.csId = @column and ctc.numero = @column2";
             }
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
@@ -126,7 +146,20 @@ namespace MVC_Turnero.Controllers
                            " inner join ProfesionalEspecEmpr pe on p.ProfesionalID = pe.ProfesionalID and pe.EmpresaID = "+ csId +
                            " group by p.ProfesionalID, p.Apellido, p.Nombre order by p.Apellido, p.Nombre asc";
             }
-
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "select p.perId as ProfesionalID, p.perApellidoyNombre as Profesional  " +
+                            " from catAgenda ag inner " +
+                            " join catPersona p on ag.perId = p.perId " +
+                            " where ag.csId = @column and not exists(select x.* from catPersonaContratados x where x.conDNI = p.perDNI ) " +
+                            " group by p.perId,p.perApellidoyNombre union " +
+                            " select c.conId as ProfesionalID, c.conApellidoyNombre as Profesional " +
+                            " from catAgenda ag inner " +
+                            " join catPersonaContratados c on ag.perId = c.conId " +
+                            " where ag.csId = @column and c.conFechaBaja is not null or c.conMotivoBaja is not null " +
+                            " group by c.conId,c.conApellidoyNombre ";
+            }
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
             da.SelectCommand.Parameters.AddWithValue("@column", csId);
 
@@ -175,6 +208,12 @@ namespace MVC_Turnero.Controllers
                 consulta = "insert into catTurneroConsultorio (id_catTurnero, consultorio, numero, activo, PerConId) values " +
                            "('" + csId + "', '" + ConsultorioNombre + "','" + ConsultorioNumero + "','" + EstadoConsultorio + "','" + ProfesionalID + "')";
             }
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "insert into catTurneroConsultorio (id_catTurnero, consultorio, numero, activo, PerConId) values " +
+                           "('" + csId + "', '" + ConsultorioNombre + "','" + ConsultorioNumero + "','" + EstadoConsultorio + "','" + ProfesionalID + "')";
+            }
 
             SqlDataAdapter da = new SqlDataAdapter();
             try
@@ -206,7 +245,11 @@ namespace MVC_Turnero.Controllers
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
                 consulta = "select activo from catTurneroConsultorio where numero = " + ConsultorioNumero + " and activo=1 and activo=" + EstadoConsultorio ;
             }
-
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "select activo from catTurneroConsultorio where numero = " + ConsultorioNumero + " and activo=1 and activo=" + EstadoConsultorio;
+            }
 
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
             da.SelectCommand.Parameters.AddWithValue("@column", ConsultorioNumero);
@@ -252,7 +295,11 @@ namespace MVC_Turnero.Controllers
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
                 consulta = "update catTurneroConsultorio set consultorio ='" + ConsultorioNombre + "', numero = '" + ConsultorioNumero + "', activo = '" + EstadoConsultorio + "', PerConId='" + ProfesionalID + "' where id='" + id + "'";
             }
-
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "update catTurneroConsultorio set consultorio ='" + ConsultorioNombre + "', numero = '" + ConsultorioNumero + "', activo = '" + EstadoConsultorio + "', PerConId='" + ProfesionalID + "' where id='" + id + "'";
+            }
             SqlDataAdapter da = new SqlDataAdapter();
             try
             {
@@ -283,6 +330,11 @@ namespace MVC_Turnero.Controllers
             if (sistema.ToLower() == "mho")
             {
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
+                consulta = "update catTurneroConsultorio set PerConId='" + ProfesionalID + "' where numero='" + id + "'";
+            }
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
                 consulta = "update catTurneroConsultorio set PerConId='" + ProfesionalID + "' where numero='" + id + "'";
             }
 
@@ -352,6 +404,12 @@ namespace MVC_Turnero.Controllers
                 consulta = "insert into catTurneroMensaje (id_catTurnero, mensaje) values " +
                            "('" + csId + "', '" + mensaje + "')";
             }
+            else if(sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "insert into catTurneroMensaje (id_catTurnero, mensaje) values " +
+                           "('" + csId + "', '" + mensaje + "')";
+            }
 
             SqlDataAdapter da = new SqlDataAdapter();
             try
@@ -386,7 +444,11 @@ namespace MVC_Turnero.Controllers
                 cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_MHO"].ConnectionString);
                 consulta = "select id,mensaje from catTurneroMensaje where id_catTurnero =  " + csId;
             }
-
+            else if (sistema.ToLower() == "gedoc")
+            {
+                cx = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_GEDOC"].ConnectionString);
+                consulta = "select id,mensaje from catTurneroMensaje where id_catTurnero =  " + csId;
+            }
             SqlDataAdapter da = new SqlDataAdapter(consulta, cx);
             da.SelectCommand.Parameters.AddWithValue("@column", csId);
 
